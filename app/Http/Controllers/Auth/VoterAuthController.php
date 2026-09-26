@@ -12,7 +12,7 @@ use Illuminate\View\View;
 class VoterAuthController extends Controller
 {
     /**
-     * Tampilkan halaman login Pemilih (Siswa & Guru)
+     * Menampilkan form login untuk Pemilih (Siswa & Guru)
      */
     public function showLoginForm(): View|RedirectResponse
     {
@@ -24,7 +24,7 @@ class VoterAuthController extends Controller
     }
 
     /**
-     * Autentikasi Pemilih menggunakan NIS / NIP
+     * Proses autentikasi Pemilih via NIS / NIP
      */
     public function login(Request $request): RedirectResponse
     {
@@ -39,20 +39,20 @@ class VoterAuthController extends Controller
 
         if (!$voter) {
             return back()->withErrors([
-                'identifier' => 'Nomor NIS / NIP tidak terdaftar dalam Master Data Pemilih (DPT).',
+                'identifier' => 'Nomor NIS / NIP tidak terdaftar dalam Daftar Pemilih Tetap (DPT).',
             ])->onlyInput('identifier');
         }
 
         if (!$voter->is_active) {
             return back()->withErrors([
-                'identifier' => 'Status hak akses pemilih Anda sedang dinonaktifkan. Silakan hubungi panitia / admin.',
+                'identifier' => 'Hak akses pemilih Anda dinonaktifkan oleh administrator.',
             ])->onlyInput('identifier');
         }
 
         Auth::guard('voter')->login($voter);
         $request->session()->regenerate();
 
-        return redirect()->route('voter.join')->with('success', "Identitas terverifikasi: {$voter->name} ({$voter->type}).");
+        return redirect()->route('voter.join')->with('success', "Identitas terverifikasi: {$voter->name}");
     }
 
     /**
@@ -64,6 +64,6 @@ class VoterAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('voter.login')->with('success', 'Anda telah keluar dari bilik suara digital.');
+        return redirect()->route('voter.login')->with('success', 'Anda telah keluar dari bilik suara.');
     }
 }
