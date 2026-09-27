@@ -20,11 +20,11 @@
         </div>
 
         <!-- 3 Tab Navigasi -->
-        <div class="flex items-center p-1 rounded-xl bg-[#0b1120] border border-slate-800/80 shadow-inner">
+        <div class="grid grid-cols-3 w-full sm:w-auto sm:flex items-center p-1 rounded-xl bg-[#0b1120] border border-slate-800/80 shadow-inner">
             <!-- Tab 1: Super Admin -->
             <a
                 href="{{ route('admin.users.index', ['tab' => 'super_admin']) }}"
-                class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'super_admin' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
+                class="flex-1 text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'super_admin' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
             >
                 Super Admin
             </a>
@@ -32,7 +32,7 @@
             <!-- Tab 2: Petugas -->
             <a
                 href="{{ route('admin.users.index', ['tab' => 'petugas']) }}"
-                class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'petugas' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
+                class="flex-1 text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'petugas' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
             >
                 Petugas
             </a>
@@ -40,9 +40,9 @@
             <!-- Tab 3: Pemilih -->
             <a
                 href="{{ route('admin.users.index', ['tab' => 'pemilih']) }}"
-                class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'pemilih' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
+                class="flex-1 text-center px-3 py-1.5 rounded-lg text-xs font-bold transition-all whitespace-nowrap {{ $activeTab === 'pemilih' ? 'bg-[#800020] text-white shadow-md shadow-rose-950/60 border border-rose-600/40' : 'text-slate-400 hover:text-white hover:bg-slate-800/50' }}"
             >
-                Pemilih (DPT)
+                Pemilih
             </a>
         </div>
     </div>
@@ -341,7 +341,7 @@
     @endif
 
     <!-- =========================================================================
-         TAB 3: KONTEN KELOLA PEMILIH (DPT: SISWA & GURU)
+         TAB 3: KONTEN KELOLA PEMILIH (SISWA & GURU)
          ========================================================================= -->
     @if ($activeTab === 'pemilih')
         <div class="space-y-4">
@@ -709,7 +709,6 @@
     <div class="w-full max-w-md rounded-2xl bg-[#0c1424] border border-slate-800 p-6 shadow-2xl space-y-4">
         <div class="flex items-center justify-between border-b border-slate-800 pb-3">
             <h3 class="text-sm font-bold text-white flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-blue-500"></span>
                 Edit Data Pemilih
             </h3>
             <button type="button" onclick="closeModal('modalEditVoter')" class="text-slate-400 hover:text-white text-lg font-bold cursor-pointer">&times;</button>

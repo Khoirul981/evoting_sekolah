@@ -39,7 +39,7 @@ class VoterAuthController extends Controller
 
         if (!$voter) {
             return back()->withErrors([
-                'identifier' => 'Nomor NIS / NIP tidak terdaftar dalam Daftar Pemilih Tetap (DPT).',
+                'identifier' => 'Nomor NIS / NIP tidak terdaftar dalam Daftar Pemilih.',
             ])->onlyInput('identifier');
         }
 

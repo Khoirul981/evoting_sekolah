@@ -19,14 +19,11 @@ class DashboardController extends Controller
         // 1. Metrik Akun & Pengguna
         $totalSuperAdmin = User::where('role', 'SUPER_ADMIN')->count();
         $totalPetugas = User::where('role', 'PETUGAS')->count();
-        $totalStudentVoters = Voter::where('type', 'STUDENT')->count();
-        $totalTeacherVoters = Voter::where('type', 'TEACHER')->count();
+        $totalStudentVoters = Voter::where('type', 'SISWA')->count();
+        $totalTeacherVoters = Voter::where('type', 'GURU')->count();
+        $totalVoters = Voter::count();
 
-        // 2. Kesiapan DPT
-        $totalActiveVoters = Voter::where('is_active', true)->count();
-        $totalInactiveVoters = Voter::where('is_active', false)->count();
-
-        // 3. Log Keamanan & Aktivitas Terkini (6 aktivitas terbaru)
+        // 2. Log Keamanan & Aktivitas Terkini (6 aktivitas terbaru)
         $recentAuditLogs = AuditLog::latest()->take(6)->get();
 
         // 4. Spesifikasi Lingkungan
@@ -52,8 +49,7 @@ class DashboardController extends Controller
             'totalPetugas',
             'totalStudentVoters',
             'totalTeacherVoters',
-            'totalActiveVoters',
-            'totalInactiveVoters',
+            'totalVoters',
             'recentAuditLogs',
             'systemInfo'
         ));

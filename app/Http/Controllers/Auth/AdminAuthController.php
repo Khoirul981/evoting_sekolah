@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\AuditLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,8 +53,6 @@ class AdminAuthController extends Controller
             /** @var \App\Models\User $user */
             $user = Auth::guard('web')->user();
 
-            AuditLog::record('LOGIN', "Pengguna {$user->name} ({$user->role}) berhasil login ke sistem.", $user);
-
             if ($user->isSuperAdmin() && \Illuminate\Support\Facades\Route::has('admin.dashboard')) {
                 return redirect()->intended(route('admin.dashboard'))->with('success', "Selamat datang, {$user->name}.");
             }
@@ -77,11 +74,6 @@ class AdminAuthController extends Controller
      */
     public function logout(Request $request): RedirectResponse
     {
-        $user = Auth::guard('web')->user();
-        if ($user) {
-            AuditLog::record('LOGOUT', "Pengguna {$user->name} logout dari sistem.", $user);
-        }
-
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

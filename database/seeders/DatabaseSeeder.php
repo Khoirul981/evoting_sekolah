@@ -122,16 +122,7 @@ class DatabaseSeeder extends Seeder
             'description' => 'Kunjungan ke Museum Geologi, Saung Angklung Udjo, dan pusat industri kreatif tekstil Bandung.',
         ]);
 
-        // 6. Audit Logs Awal
-        AuditLog::create([
-            'user_id' => $superAdmin1->id,
-            'user_name' => $superAdmin1->name,
-            'role' => $superAdmin1->role,
-            'action' => 'SYSTEM_INIT',
-            'description' => 'Inisialisasi sistem e-voting dan pembuatan akun pengelola awal.',
-            'ip_address' => '127.0.0.1',
-        ]);
-
+        // 6. Audit Logs Awal (Hanya Aksi Terkait Event)
         AuditLog::create([
             'user_id' => $petugas1->id,
             'user_name' => $petugas1->name,
@@ -139,6 +130,7 @@ class DatabaseSeeder extends Seeder
             'action' => 'CREATE_EVENT',
             'description' => "Membuat event baru '{$event1->title}' (Kode Room: {$event1->room_code})",
             'ip_address' => '127.0.0.1',
+            'created_at' => now()->subMinutes(30),
         ]);
 
         AuditLog::create([
@@ -148,6 +140,27 @@ class DatabaseSeeder extends Seeder
             'action' => 'CREATE_EVENT',
             'description' => "Membuat event baru '{$event2->title}' (Kode Room: {$event2->room_code})",
             'ip_address' => '127.0.0.1',
+            'created_at' => now()->subMinutes(20),
+        ]);
+
+        AuditLog::create([
+            'user_id' => $petugas1->id,
+            'user_name' => $petugas1->name,
+            'role' => $petugas1->role,
+            'action' => 'CHANGE_EVENT_STATUS',
+            'description' => "Mengubah status event '{$event1->title}' dari DRAFT menjadi PUBLISHED",
+            'ip_address' => '127.0.0.1',
+            'created_at' => now()->subMinutes(10),
+        ]);
+
+        AuditLog::create([
+            'user_id' => $petugas1->id,
+            'user_name' => $petugas1->name,
+            'role' => $petugas1->role,
+            'action' => 'UPDATE_EVENT',
+            'description' => "Memperbarui deskripsi dan rincian opsi pada event '{$event2->title}'",
+            'ip_address' => '127.0.0.1',
+            'created_at' => now()->subMinutes(5),
         ]);
     }
 }

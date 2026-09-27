@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\AuditLog;
 use App\Models\User;
 use App\Models\Voter;
 use Illuminate\Http\RedirectResponse;
@@ -107,11 +106,6 @@ class UserController extends Controller
         $roleLabel = $user->role === 'SUPER_ADMIN' ? 'Super Admin' : 'Petugas';
         $tab = $user->role === 'SUPER_ADMIN' ? 'super_admin' : 'petugas';
 
-        AuditLog::record(
-            'CREATE_USER',
-            "Menambahkan akun {$roleLabel} baru: {$user->name} ({$user->email})"
-        );
-
         return redirect()->route('admin.users.index', ['tab' => $tab])
             ->with('success', "Akun {$roleLabel} '{$user->name}' berhasil ditambahkan.");
     }
@@ -137,23 +131,14 @@ class UserController extends Controller
         $user->name = $validated['name'];
         $user->email = $validated['email'];
 
-        $passwordChanged = false;
         if (!empty($validated['password'])) {
             $user->password = Hash::make($validated['password']);
-            $passwordChanged = true;
         }
 
         $user->save();
 
         $roleLabel = $user->role === 'SUPER_ADMIN' ? 'Super Admin' : 'Petugas';
         $tab = $user->role === 'SUPER_ADMIN' ? 'super_admin' : 'petugas';
-
-        $desc = "Memperbarui data akun {$roleLabel}: {$user->name} ({$user->email})";
-        if ($passwordChanged) {
-            $desc .= " beserta penggantian password";
-        }
-
-        AuditLog::record('UPDATE_USER', $desc);
 
         return redirect()->route('admin.users.index', ['tab' => $tab])
             ->with('success', "Data {$roleLabel} '{$user->name}' berhasil diperbarui.");
@@ -172,12 +157,6 @@ class UserController extends Controller
         $roleLabel = $user->role === 'SUPER_ADMIN' ? 'Super Admin' : 'Petugas';
         $tab = $user->role === 'SUPER_ADMIN' ? 'super_admin' : 'petugas';
         $userName = $user->name;
-        $userEmail = $user->email;
-
-        AuditLog::record(
-            'DELETE_USER',
-            "Menghapus akun {$roleLabel}: {$userName} ({$userEmail})"
-        );
 
         $user->delete();
 
@@ -211,11 +190,6 @@ class UserController extends Controller
 
         $typeLabel = $voter->type === 'SISWA' ? 'Siswa' : 'Guru';
 
-        AuditLog::record(
-            'CREATE_VOTER',
-            "Menambahkan pemilih {$typeLabel} baru: {$voter->name} (NIS/NIP: {$voter->identifier})"
-        );
-
         return redirect()->route('admin.users.index', ['tab' => 'pemilih'])
             ->with('success', "Pemilih {$typeLabel} '{$voter->name}' ({$voter->identifier}) berhasil ditambahkan.");
     }
@@ -244,11 +218,6 @@ class UserController extends Controller
 
         $typeLabel = $voter->type === 'SISWA' ? 'Siswa' : 'Guru';
 
-        AuditLog::record(
-            'UPDATE_VOTER',
-            "Memperbarui data pemilih {$typeLabel}: {$voter->name} (NIS/NIP: {$voter->identifier})"
-        );
-
         return redirect()->route('admin.users.index', ['tab' => 'pemilih'])
             ->with('success', "Data pemilih {$typeLabel} '{$voter->name}' berhasil diperbarui.");
     }
@@ -261,11 +230,6 @@ class UserController extends Controller
         $typeLabel = $voter->type === 'SISWA' ? 'Siswa' : 'Guru';
         $voterName = $voter->name;
         $voterId = $voter->identifier;
-
-        AuditLog::record(
-            'DELETE_VOTER',
-            "Menghapus data pemilih {$typeLabel}: {$voterName} (NIS/NIP: {$voterId})"
-        );
 
         $voter->delete();
 

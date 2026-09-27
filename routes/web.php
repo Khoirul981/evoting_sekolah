@@ -37,10 +37,13 @@ Route::middleware(['auth:web', 'role:SUPER_ADMIN'])->prefix('admin')->name('admi
     Route::put('/users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{user}', [\App\Http\Controllers\Admin\UserController::class, 'destroyUser'])->name('users.destroy');
 
-    // Manajemen Pemilih (DPT: Siswa & Guru)
+    // Manajemen Pemilih (Siswa & Guru)
     Route::post('/voters', [\App\Http\Controllers\Admin\UserController::class, 'storeVoter'])->name('voters.store');
     Route::put('/voters/{voter}', [\App\Http\Controllers\Admin\UserController::class, 'updateVoter'])->name('voters.update');
     Route::delete('/voters/{voter}', [\App\Http\Controllers\Admin\UserController::class, 'destroyVoter'])->name('voters.destroy');
+
+    // Audit Log & Security (Jejak Digital Sistem)
+    Route::get('/audit-logs', [\App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-logs.index');
 });
 
 

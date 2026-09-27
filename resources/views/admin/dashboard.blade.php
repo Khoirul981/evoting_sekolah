@@ -95,7 +95,7 @@
             </div>
             <div class="mt-4 flex items-baseline gap-2">
                 <span class="text-3xl font-extrabold text-white tracking-tight">{{ $totalTeacherVoters }}</span>
-                <span class="text-xs text-rose-400 font-medium">guru / staf</span>
+                <span class="text-xs text-rose-400 font-medium">guru </span>
             </div>
             <p class="text-[11px] text-rose-300/60 mt-1">Terdaftar dengan Nomor Induk Pegawai</p>
         </div>
@@ -103,103 +103,115 @@
     </div>
 
     <!-- =========================================================================
-         3. BARIS STATUS KESIAPAN DPT & LINGKUNGAN (CARD BIRU GELAP)
+         3. BARIS WEWENANG ROLE & LINGKUNGAN (CARD BIRU GELAP)
          ========================================================================= -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- KIRI: STATUS KESIAPAN DPT (Sesuai Desain Gambar 2) -->
+        <!-- KIRI: WEWENANG & FUNGSI ROLE SISTEM (Separation of Duties) -->
         <div class="bg-[#0c1424] border border-slate-800/90 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
             <div>
                 <!-- Header Card -->
-                <div class="flex items-start gap-3 mb-5">
-                    <div>
-                        <h2 class="text-lg font-bold text-white tracking-tight">Status Kesiapan DPT</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Kesiapan data pemilih tetap untuk pemungutan suara</p>
-                    </div>
+                <div class="mb-4">
+                    <h2 class="text-lg font-bold text-white tracking-tight">Wewenang & Fungsi Role Sistem</h2>
+                    <p class="text-xs text-slate-400 mt-0.5">Pemisahan tugas pada ekosistem VOTINGYUK</p>
                 </div>
 
-                <!-- 2 Kotak Status: Pemilih Aktif & Pemilih Nonaktif -->
-                <div class="grid grid-cols-2 gap-4 mb-6">
-                    <!-- Box 1: Pemilih Aktif -->
-                    <div class="bg-[#070e1c] border border-slate-800 rounded-xl p-4">
-                        <div class="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span>Pemilih Aktif</span>
+                <!-- 3 Item Role -->
+                <div class="space-y-3">
+                    <!-- 1. Super Admin -->
+                    <div class="p-3.5 bg-[#070e1c] border border-slate-800 rounded-xl">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#800020]/80 text-rose-200 border border-rose-600/30">
+                                SUPER_ADMIN
+                            </span>
+                            <span class="text-xs font-semibold text-white">Administrator Sistem</span>
                         </div>
-                        <div class="mt-3 flex items-baseline gap-1.5">
-                            <span class="text-2xl font-bold text-white">{{ $totalActiveVoters }}</span>
-                            <span class="text-xs text-slate-400">akun</span>
-                        </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Mengelola seluruh akun pengguna (Super Admin, Petugas, dan Pemilih) serta memantau integritas jejak digital (Audit Log).
+                        </p>
                     </div>
 
-                    <!-- Box 2: Pemilih Nonaktif -->
-                    <div class="bg-[#070e1c] border border-slate-800 rounded-xl p-4">
-                        <div class="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
-                            <span class="w-2 h-2 rounded-full bg-slate-500"></span>
-                            <span>Pemilih Nonaktif</span>
+                    <!-- 2. Petugas -->
+                    <div class="p-3.5 bg-[#070e1c] border border-slate-800 rounded-xl">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/80 text-blue-300 border border-blue-700/60">
+                                PETUGAS
+                            </span>
+                            <span class="text-xs font-semibold text-white">Panitia Pemilihan Event</span>
                         </div>
-                        <div class="mt-3 flex items-baseline gap-1.5">
-                            <span class="text-2xl font-bold text-white">{{ $totalInactiveVoters }}</span>
-                            <span class="text-xs text-slate-400">akun</span>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Membuat dan mengelola event voting (Kandidat & Opsi), mengatur status event, serta memantau perolehan suara & ekspor laporan.
+                        </p>
+                    </div>
+
+                    <!-- 3. Pemilih -->
+                    <div class="p-3.5 bg-[#070e1c] border border-slate-800 rounded-xl">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-white-950/80 text-white-300 border border-white-700/60">
+                                PEMILIH
+                            </span>
+                            <span class="text-xs font-semibold text-white">Siswa & Guru</span>
                         </div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">
+                            Mengakses bilik suara melalui kode room & validasi NIS/NIP, memberikan hak suara secara langsung, bebas, rahasia, jujur, dan adil.
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Footer Distribusi Pemilih -->
-            <div class="pt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2">
-                <span class="text-slate-400">Distribusi Pemilih</span>
-                <span class="text-slate-200 font-semibold">
-                    {{ $totalStudentVoters }} Siswa • {{ $totalTeacherVoters }} Guru & Tenaga Pendidik
+            <!-- Footer Ringkasan Pengguna -->
+            <div class="pt-4 mt-4 border-t border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2">
+                <span class="text-slate-400">Total Pengguna Terdaftar</span>
+                <span class="text-white font-semibold">
+                    {{ $totalSuperAdmin + $totalPetugas + $totalVoters }} Akun
+                    <span class="text-slate-400 text-[11px] font-normal">({{ $totalSuperAdmin + $totalPetugas }} Pengelola | {{ $totalVoters }} Pemilih)</span>
                 </span>
             </div>
         </div>
 
         <!-- KANAN: STATUS & LINGKUNGAN (Sesuai Desain Gambar 1) -->
-        <div class="bg-[#0c1424] border border-slate-800/90 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
-            <div>
-                <!-- Header Card -->
-                <div class="mb-5">
-                    <h2 class="text-lg font-bold text-white tracking-tight">Status & Lingkungan</h2>
-                    <p class="text-xs text-slate-400 mt-0.5">Spesifikasi infrastruktur sistem</p>
+        <div class="bg-[#0c1424] border border-slate-800/90 rounded-2xl p-6 shadow-xl flex flex-col">
+            <!-- Header Card -->
+            <div class="mb-4">
+                <h2 class="text-lg font-bold text-white tracking-tight">Status & Lingkungan</h2>
+                <p class="text-xs text-slate-400 mt-0.5">Spesifikasi infrastruktur sistem</p>
+            </div>
+
+            <!-- Daftar Info Spesifikasi (Merata Mengisi Tinggi Card) -->
+            <div class="flex-1 flex flex-col justify-between text-xs py-1">
+                <!-- Database Engine -->
+                <div class="flex items-center justify-between py-3.5 border-b border-slate-800/60">
+                    <span class="text-slate-400">Database Engine</span>
+                    <div class="flex items-center gap-2 font-medium text-emerald-400 font-mono">
+                        <span>{{ $systemInfo['db_engine'] }}</span>
+                    </div>
                 </div>
 
-                <!-- Daftar Info Spesifikasi -->
-                <div class="space-y-3.5 text-xs">
-                    <!-- Database Engine -->
-                    <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
-                        <span class="text-slate-400">Database Engine</span>
-                        <div class="flex items-center gap-2 font-medium text-emerald-400 font-mono">
-                            <span>{{ $systemInfo['db_engine'] }}</span>
-                        </div>
-                    </div>
+                <!-- PHP Version -->
+                <div class="flex items-center justify-between py-3.5 border-b border-slate-800/60">
+                    <span class="text-slate-400">PHP Version</span>
+                    <span class="font-bold text-white font-mono">{{ $systemInfo['php_version'] }}</span>
+                </div>
 
-                    <!-- PHP Version -->
-                    <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
-                        <span class="text-slate-400">PHP Version</span>
-                        <span class="font-bold text-white font-mono">{{ $systemInfo['php_version'] }}</span>
+                <!-- Framework -->
+                <div class="flex items-center justify-between py-3.5 border-b border-slate-800/60">
+                    <span class="text-slate-400">Framework</span>
+                    <div class="flex items-center gap-1.5 font-semibold">
+                        <span class="text-rose-500 font-bold">Laravel</span>
+                        <span class="text-white font-mono">{{ $systemInfo['laravel_version'] }}</span>
                     </div>
+                </div>
 
-                    <!-- Framework -->
-                    <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
-                        <span class="text-slate-400">Framework</span>
-                        <div class="flex items-center gap-1.5 font-semibold">
-                            <span class="text-rose-500 font-bold">Laravel</span>
-                            <span class="text-white font-mono">{{ $systemInfo['laravel_version'] }}</span>
-                        </div>
-                    </div>
+                <!-- Enkripsi Suara -->
+                <div class="flex items-center justify-between py-3.5 border-b border-slate-800/60">
+                    <span class="text-slate-400">Enkripsi Suara</span>
+                    <span class="font-mono text-white font-semibold">{{ $systemInfo['encryption'] }}</span>
+                </div>
 
-                    <!-- Enkripsi Suara -->
-                    <div class="flex items-center justify-between py-1.5 border-b border-slate-800/60">
-                        <span class="text-slate-400">Enkripsi Suara</span>
-                        <span class="font-mono text-white font-semibold">{{ $systemInfo['encryption'] }}</span>
-                    </div>
-
-                    <!-- Zona Waktu -->
-                    <div class="flex items-center justify-between py-1.5">
-                        <span class="text-slate-400">Zona Waktu</span>
-                        <span class="font-semibold text-white">{{ $systemInfo['timezone'] }}</span>
-                    </div>
+                <!-- Zona Waktu -->
+                <div class="flex items-center justify-between py-3.5">
+                    <span class="text-slate-400">Zona Waktu</span>
+                    <span class="font-semibold text-white">{{ $systemInfo['timezone'] }}</span>
                 </div>
             </div>
         </div>
@@ -248,25 +260,21 @@
 
                             <!-- Kolom Aksi (Badge Berwarna) -->
                             <td class="py-3.5 px-4 whitespace-nowrap">
-                                @if($log->action === 'LOGIN')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-blue-950/80 text-blue-400 border border-blue-800/60">
-                                        LOGIN
+                                @if($log->action === 'CHANGE_EVENT_STATUS')
+                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-950/80 text-amber-400 border border-amber-800/60">
+                                        CHANGE_EVENT_STATUS
                                     </span>
-                                @elseif($log->action === 'LOGOUT')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-800/80 text-slate-300 border border-slate-700">
-                                        LOGOUT
-                                    </span>
-                                @elseif($log->action === 'SYSTEM_INIT')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-purple-950/80 text-purple-400 border border-purple-800/60">
-                                        SYSTEM_INIT
-                                    </span>
-                                @elseif(str_contains($log->action, 'CREATE'))
+                                @elseif($log->action === 'CREATE_EVENT')
                                     <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
-                                        {{ $log->action }}
+                                        CREATE_EVENT
                                     </span>
-                                @elseif(str_contains($log->action, 'DELETE'))
+                                @elseif($log->action === 'UPDATE_EVENT')
+                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-sky-950/80 text-sky-400 border border-sky-800/60">
+                                        UPDATE_EVENT
+                                    </span>
+                                @elseif($log->action === 'DELETE_EVENT')
                                     <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-rose-950/80 text-rose-400 border border-rose-800/60">
-                                        {{ $log->action }}
+                                        DELETE_EVENT
                                     </span>
                                 @else
                                     <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
