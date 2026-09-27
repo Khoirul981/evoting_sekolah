@@ -17,10 +17,17 @@ class AdminAuthController extends Controller
     public function showLoginForm(): View|RedirectResponse
     {
         if (Auth::guard('web')->check()) {
+            /** @var \App\Models\User $user */
             $user = Auth::guard('web')->user();
-            return $user->isSuperAdmin()
-                ? redirect()->route('admin.dashboard')
-                : redirect()->route('admin.events.index');
+            if ($user->isSuperAdmin() && \Illuminate\Support\Facades\Route::has('admin.dashboard')) {
+                return redirect()->route('admin.dashboard');
+            }
+
+            if (\Illuminate\Support\Facades\Route::has('admin.events.index')) {
+                return redirect()->route('admin.events.index');
+            }
+
+            return redirect()->route('admin.login');
         }
 
         return view('auth.admin-login');
@@ -44,15 +51,20 @@ class AdminAuthController extends Controller
 
         if (Auth::guard('web')->attempt($credentials, $remember)) {
             $request->session()->regenerate();
+            /** @var \App\Models\User $user */
             $user = Auth::guard('web')->user();
 
             AuditLog::record('LOGIN', "Pengguna {$user->name} ({$user->role}) berhasil login ke sistem.", $user);
 
-            if ($user->isSuperAdmin()) {
+            if ($user->isSuperAdmin() && \Illuminate\Support\Facades\Route::has('admin.dashboard')) {
                 return redirect()->intended(route('admin.dashboard'))->with('success', "Selamat datang, {$user->name}.");
             }
 
-            return redirect()->intended(route('admin.events.index'))->with('success', "Selamat datang, {$user->name}.");
+            if (\Illuminate\Support\Facades\Route::has('admin.events.index')) {
+                return redirect()->intended(route('admin.events.index'))->with('success', "Selamat datang, {$user->name}.");
+            }
+
+            return redirect()->route('admin.login')->with('success', "Selamat datang, {$user->name}.");
         }
 
         return back()->withErrors([

@@ -18,7 +18,7 @@
         <!-- Header Identitas Aplikasi (Pasti di Atas) -->
         <div class="flex flex-col items-center text-center mb-5">
             @yield('header_badge')
-            <h1 class="text-2xl font-bold tracking-tight mt-2.5 @yield('title_color', 'text-white')">E-Voting Sekolah</h1>
+            <h1 class="text-2xl font-bold tracking-tight mt-2.5 @yield('title_color', 'text-white')">VOTINGYUK</h1>
             <p class="text-xs mt-0.5 @yield('subtitle_color', 'text-slate-400')">@yield('header_subtitle', 'Sistem Pemilihan Suara Digital')</p>
         </div>
 
@@ -49,11 +49,7 @@
 
         <!-- Footer Bawah Konsisten di Luar Card -->
         <div class="flex flex-col items-center gap-1.5 text-center text-xs mt-5 @yield('footer_color', 'text-slate-500')">
-            <div class="flex items-center gap-2">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
-                <span class="text-[11px] font-medium @yield('status_color', 'text-slate-400')">Server Sistem Terhubung</span>
-            </div>
-            <p class="text-[11px] opacity-75">&copy; {{ date('Y') }} E-Voting Sekolah. Hak Cipta Dilindungi.</p>
+            <p class="text-[11px] opacity-75">&copy; {{ date('Y') }} VOTINGYUK. Hak Cipta Dilindungi.</p>
         </div>
 
     </div>

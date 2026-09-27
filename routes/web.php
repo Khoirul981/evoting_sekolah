@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes - E-Voting Sekolah
+| Web Routes - VOTINGYUK
 |--------------------------------------------------------------------------
 */
 
@@ -24,6 +24,14 @@ Route::post('/voter/logout', [VoterAuthController::class, 'logout'])->name('vote
 Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/login', [AdminAuthController::class, 'login'])->name('admin.login.post');
 Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+
+// =========================================================================
+// 3. PANEL SUPER ADMIN (HAK AKSES ADMINISTRATOR SISTEM)
+// =========================================================================
+Route::middleware(['auth:web', 'role:SUPER_ADMIN'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+});
+
 
 
 

@@ -33,12 +33,12 @@
     <div class="bg-[#1e050b] border border-rose-900/40 rounded-2xl p-6 sm:p-7 shadow-2xl">
         <div class="mb-5">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-rose-950/80 text-rose-300 border border-rose-900/60 mb-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>
+
                 <span>PANEL PENGELOLA</span>
             </div>
             <h2 class="text-xl font-bold text-white tracking-tight">Login Pengelola</h2>
             <p class="text-xs text-rose-300/80 mt-1">
-                Akses panel administrasi Super Admin dan Petugas Panitia.
+                Akses panel administrasi Super Admin dan Petugas Panitia Event.
             </p>
         </div>
 
@@ -68,7 +68,7 @@
                 </div>
                 @error('email')
                     <p class="mt-1.5 text-xs text-rose-400 flex items-center gap-1 font-medium">
-                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-3.5 h-3.5 shrink-0" fill="currentColor" viewBox="0 0 20 20">
                             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                         </svg>
                         <span>{{ $message }}</span>
@@ -122,18 +122,9 @@
                 type="submit"
                 class="w-full py-3 px-4 bg-[#881337] hover:bg-[#9f1239] active:bg-[#700f2b] text-white font-semibold rounded-xl text-sm shadow-lg shadow-rose-950/60 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-                <span>Masuk ke Panel Pengelola</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                <span>Login</span>
             </button>
         </form>
-
-        <div class="mt-5 pt-4 border-t border-rose-950 text-center">
-            <p class="text-xs text-rose-300/60">
-                Akses terproteksi khusus Super Admin & Petugas Panitia.
-            </p>
-        </div>
     </div>
 </div>
 @endsection

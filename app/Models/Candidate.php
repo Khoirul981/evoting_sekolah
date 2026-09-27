@@ -35,7 +35,7 @@ class Candidate extends Model
     public function getPhotoUrlAttribute(): ?string
     {
         if ($this->photo && Storage::disk('public')->exists($this->photo)) {
-            return Storage::disk('public')->url($this->photo);
+            return Storage::url($this->photo);
         }
 
         return null;

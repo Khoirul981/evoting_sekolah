@@ -33,12 +33,11 @@
     <div class="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-sm">
         <div class="mb-5">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-300 mb-2.5">
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
                 <span>AKSES PEMILIH</span>
             </div>
             <h2 class="text-xl font-bold text-slate-900 tracking-tight">Masuk Bilik Suara</h2>
             <p class="text-xs text-slate-600 mt-1">
-                Silakan masukkan Nomor Induk Siswa (NIS) atau NIP Guru Anda.
+                Silakan masukkan NIS untuk SISWA atau NIP untuk GURU.
             </p>
         </div>
 
@@ -82,9 +81,6 @@
                 class="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 active:bg-black text-white font-semibold rounded-xl text-base shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
                 <span>Masuk ke Bilik Suara</span>
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
             </button>
         </form>
 
