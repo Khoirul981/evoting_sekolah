@@ -29,14 +29,27 @@ class AuditLog extends Model
     /**
      * Helper untuk mencatat aktivitas secara ringkas dan konsisten
      */
-    public static function record(string $action, string $description, ?User $user = null): self
+    public static function record(string $action, string $description, mixed $user = null): self
     {
-        $user = $user ?? Auth::guard('web')->user();
+        if (!$user) {
+            if (Auth::guard('voter')->check()) {
+                $voter = Auth::guard('voter')->user();
+                return self::create([
+                    'user_id' => null,
+                    'user_name' => $voter->name . ' (' . $voter->identifier . ')',
+                    'role' => 'VOTER',
+                    'action' => $action,
+                    'description' => $description,
+                    'ip_address' => Request::ip() ?? '127.0.0.1',
+                ]);
+            }
+            $user = Auth::guard('web')->user();
+        }
 
         return self::create([
-            'user_id' => $user?->id,
-            'user_name' => $user?->name ?? 'Sistem / Anonim',
-            'role' => $user?->role ?? 'SYSTEM',
+            'user_id' => ($user instanceof User) ? $user->id : null,
+            'user_name' => is_object($user) ? ($user->name ?? 'Sistem / Anonim') : 'Sistem / Anonim',
+            'role' => is_object($user) ? ($user->role ?? 'SYSTEM') : 'SYSTEM',
             'action' => $action,
             'description' => $description,
             'ip_address' => Request::ip() ?? '127.0.0.1',
