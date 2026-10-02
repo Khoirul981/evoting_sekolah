@@ -111,10 +111,7 @@
                         type="submit"
                         class="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg bg-rose-950/80 hover:bg-[#881337] text-rose-200 hover:text-white text-[11px] font-semibold border border-rose-900/60 transition-all cursor-pointer"
                     >
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                        <span>Keluar (Logout)</span>
+                        <span>Logout</span>
                     </button>
                 </form>
             </div>
@@ -145,22 +142,12 @@
 
             <!-- Pojok Kanan: Tanggal & Jam WIB (UTC+7) -->
             <div class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#070e1c] border border-slate-800 text-[11px] sm:text-xs text-slate-300 font-medium">
-                <span id="liveClock">{{ now()->translatedFormat('l, d F Y | H:i') }} WIB (UTC+7)</span>
+                <span id="liveClock">{{ now()->translatedFormat('l, d F Y | H:i') }} WIB</span>
             </div>
         </header>
 
         <!-- Area Konten Halaman -->
         <main class="flex-1 p-4 sm:p-6 space-y-6 max-w-7xl w-full mx-auto">
-            <!-- Flash Message Sukses -->
-            @if(session('success'))
-                <div class="p-3.5 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-300 text-xs flex items-center gap-2.5 shadow-sm">
-                    <svg class="w-4 h-4 shrink-0 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    <span>{{ session('success') }}</span>
-                </div>
-            @endif
-
             <!-- Flash Message Error -->
             @if(session('error'))
                 <div class="p-3.5 rounded-xl bg-rose-950/80 border border-rose-700 text-rose-300 text-xs flex items-center gap-2.5 shadow-sm">

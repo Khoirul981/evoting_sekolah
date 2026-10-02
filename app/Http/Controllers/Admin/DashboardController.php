@@ -41,7 +41,7 @@ class DashboardController extends Controller
             'php_version' => 'PHP ' . PHP_VERSION,
             'laravel_version' => app()->version(),
             'encryption' => 'AES-256-CBC',
-            'timezone' => 'WIB (UTC+7)',
+            'timezone' => 'WIB',
         ];
 
         return view('admin.dashboard', compact(

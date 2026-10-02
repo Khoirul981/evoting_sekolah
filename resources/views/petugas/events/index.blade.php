@@ -9,7 +9,7 @@
     <!-- =========================================================================
          1. WELCOME BANNER & HEADER PANEL PETUGAS (TEMA ELECTRIC CYAN)
          ========================================================================= -->
-    <div class="bg-linear-to-r from-[#071938] via-[#091f46] to-[#050d1a] border border-cyan-500/30 rounded-2xl p-6 sm:p-7 shadow-xl shadow-black/30 relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+    <div class="bg-[#071226] border border-cyan-950 rounded-2xl p-6 sm:p-7 shadow-xl shadow-black/30 relative overflow-hidden flex flex-col md:flex-row md:items-center md:justify-between gap-5">
         <div class="relative z-10">
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-[11px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 mb-3">
                 <span>PANEL MANAJEMEN PEMILIHAN</span>
@@ -26,17 +26,11 @@
             <button
                 type="button"
                 onclick="openCreateModal()"
-                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-cyan-950/60 border border-cyan-400/40 transition-all transform active:scale-95 cursor-pointer"
+                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs sm:text-sm shadow-lg border border-cyan-400/40 transition-all transform active:scale-95 cursor-pointer"
             >
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
                 <span>Buat Event Baru</span>
             </button>
         </div>
-
-        <!-- Decorative Cyan Glow Effect -->
-        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none"></div>
     </div>
 
     <!-- =========================================================================
@@ -88,7 +82,7 @@
 
                 <button
                     type="submit"
-                    class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-md shadow-cyan-950/40"
+                    class="px-4 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-xl text-xs font-bold transition-all shrink-0 cursor-pointer shadow-md"
                     title="Cari Data"
                 >
                     Filter
@@ -123,11 +117,11 @@
                         <div class="flex items-center justify-between gap-2">
                             <!-- Kategori Badge (KANDIDAT: Royal Indigo/Violet vs OPSI: Golden Amber) -->
                             @if($event->category === 'KANDIDAT')
-                                <span class="inline-block px-3 py-1 rounded-lg text-xs font-black tracking-wider bg-indigo-500/25 text-indigo-200 border border-indigo-400/80 shadow-xs shadow-indigo-950/50">
+                                <span class="inline-block px-3 py-1 rounded-lg text-xs font-black tracking-wider bg-indigo-500/25 text-indigo-200 border border-indigo-400/80 shadow-xs">
                                     KANDIDAT
                                 </span>
                             @else
-                                <span class="inline-block px-3 py-1 rounded-lg text-xs font-black tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/80 shadow-xs shadow-amber-950/50">
+                                <span class="inline-block px-3 py-1 rounded-lg text-xs font-black tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/80 shadow-xs">
                                     OPSI
                                 </span>
                             @endif
@@ -162,9 +156,6 @@
                                 class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-cyan-600/20 hover:bg-cyan-600 text-cyan-300 hover:text-white text-[11px] font-semibold border border-cyan-400/40 transition-all cursor-pointer"
                                 title="Salin Kode Ruang"
                             >
-                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                                </svg>
                                 <span>Salin</span>
                             </button>
                         </div>
@@ -259,7 +250,7 @@
                                         <input type="hidden" name="status" value="PUBLISHED">
                                         <button
                                             type="submit"
-                                            class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-md shadow-cyan-950/50 border border-cyan-400/40 transition-all cursor-pointer"
+                                            class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-md border border-cyan-400/40 transition-all cursor-pointer"
                                             title="Publikasikan Event & Buka Ruang Voting Sekarang"
                                         >
                                             <span>PUBLISH</span>
@@ -273,7 +264,7 @@
                                         <input type="hidden" name="status" value="CLOSED">
                                         <button
                                             type="submit"
-                                            class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-md shadow-rose-950/50 border border-rose-400/40 transition-all cursor-pointer"
+                                            class="w-full inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-md border border-rose-400/40 transition-all cursor-pointer"
                                             title="Tutup Ruang Voting & Selesaikan Event"
                                         >
                                             <span>TUTUP EVENT</span>
@@ -348,7 +339,7 @@
                     <button
                         type="button"
                         onclick="openCreateModal()"
-                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-lg shadow-cyan-950/60 border border-cyan-400/40 transition-all cursor-pointer"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-lg border border-cyan-400/40 transition-all cursor-pointer"
                     >
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -365,16 +356,11 @@
 <!-- =========================================================================
      MODAL 1: BUAT EVENT BARU
      ========================================================================= -->
-<div id="createEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs overflow-y-auto">
+<div id="createEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 overflow-y-auto">
     <div class="bg-[#071226] border border-cyan-950/90 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden my-8">
         <!-- Modal Header -->
         <div class="p-5 border-b border-cyan-950/70 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-cyan-600/20 text-cyan-400 border border-cyan-400/30 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
-                </div>
                 <div>
                     <h3 class="text-base font-bold text-white">Buat Event Pemilihan Baru</h3>
                     <p class="text-xs text-cyan-200/60">Atur rincian ruang voting dan jadwal pelaksanaan.</p>
@@ -517,16 +503,11 @@
 <!-- =========================================================================
      MODAL 2: EDIT EVENT
      ========================================================================= -->
-<div id="editEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs overflow-y-auto">
+<div id="editEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 overflow-y-auto">
     <div class="bg-[#071226] border border-cyan-950/90 rounded-2xl w-full max-w-xl shadow-2xl overflow-hidden my-8">
         <!-- Modal Header -->
         <div class="p-5 border-b border-cyan-950/70 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-cyan-600/20 text-cyan-400 border border-cyan-400/30 flex items-center justify-center">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                    </svg>
-                </div>
                 <div>
                     <h3 class="text-base font-bold text-white">Edit Rincian Event</h3>
                     <p class="text-xs text-cyan-200/60">Perbarui informasi, jadwal, dan kode ruang voting.</p>
@@ -672,7 +653,7 @@
 <!-- =========================================================================
      MODAL 3: KONFIRMASI HAPUS EVENT
      ========================================================================= -->
-<div id="deleteEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs overflow-y-auto">
+<div id="deleteEventModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 overflow-y-auto">
     <div class="bg-[#071226] border border-rose-900/60 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden my-8">
         <div class="p-5 border-b border-rose-900/40 flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-rose-600/20 text-rose-400 border border-rose-500/30 flex items-center justify-center shrink-0">
@@ -707,7 +688,7 @@
             </button>
             <button
                 type="submit"
-                class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-lg shadow-rose-900/40 transition-all cursor-pointer"
+                class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold shadow-lg transition-all cursor-pointer"
             >
                 Ya, Hapus Permanen
             </button>
@@ -733,9 +714,6 @@
 
         const originalHTML = buttonElement.innerHTML;
         buttonElement.innerHTML = `
-            <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
             <span class="text-emerald-300 font-bold">Tersalin!</span>
         `;
         buttonElement.classList.add('bg-emerald-950/80', 'border-emerald-700');

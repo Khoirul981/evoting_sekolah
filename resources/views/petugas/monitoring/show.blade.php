@@ -24,20 +24,8 @@
             <span class="text-cyan-400 font-bold">Live Monitoring</span>
         </div>
 
-        <!-- Action Buttons: Export CSV, Kelola Kandidat, Kembali -->
+        <!-- Action Button: Kelola Kandidat -->
         <div class="flex items-center gap-2 flex-wrap">
-            <!-- Tombol Export CSV Rekapitulasi -->
-            <a
-                href="{{ route('petugas.events.export', $event) }}"
-                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-emerald-600/20 hover:bg-emerald-600 text-emerald-300 hover:text-white text-xs font-bold border border-emerald-500/40 transition-all cursor-pointer shadow-xs"
-                title="Unduh laporan lengkap rekapitulasi suara dalam format CSV / Excel"
-            >
-                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                <span>Export Rekapitulasi (CSV)</span>
-            </a>
-
             <!-- Tombol Kelola Kandidat -->
             <a
                 href="{{ route('petugas.candidates.index', $event) }}"
@@ -48,27 +36,13 @@
                 </svg>
                 <span>Kelola {{ $event->category === 'KANDIDAT' ? 'Kandidat' : 'Opsi' }}</span>
             </a>
-
-            <!-- Tombol Kembali -->
-            <a
-                href="{{ route('petugas.events.index') }}"
-                class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0a1832] hover:bg-cyan-950/70 text-slate-300 hover:text-white text-xs font-semibold border border-cyan-900/50 transition-all cursor-pointer shadow-xs"
-            >
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z" />
-                </svg>
-                <span>Kembali</span>
-            </a>
         </div>
     </div>
 
     <!-- =========================================================================
          2. EVENT OVERVIEW HEADER CARD
          ========================================================================= -->
-    <div class="p-5 sm:p-6 rounded-2xl bg-linear-to-br from-[#071226] via-[#091b36] to-[#042438] border border-cyan-900/60 shadow-xl relative overflow-hidden">
-        <!-- Glow Ambient -->
-        <div class="absolute -top-16 -right-16 w-56 h-56 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
-
+    <div class="p-5 sm:p-6 rounded-2xl bg-[#071226] border border-cyan-900/60 shadow-xl relative overflow-hidden">
         <div class="relative flex flex-col lg:flex-row lg:items-center justify-between gap-5">
             <!-- Informasi Utama Event -->
             <div class="space-y-2.5 max-w-3xl">
@@ -88,16 +62,15 @@
                     <span id="eventStatusBadge">
                         @if($event->status === 'PUBLISHED')
                             <span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 shadow-xs">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span>PUBLISHED (SEDANG AKTIF)</span>
+                                <span>PUBLISHED</span>
                             </span>
                         @elseif($event->status === 'DRAFT')
                             <span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase bg-amber-500/20 text-amber-300 border border-amber-500/50 shadow-xs">
-                                DRAFT (BELUM AKTIF)
+                                DRAFT
                             </span>
                         @else
                             <span class="px-2.5 py-1 rounded-md text-[11px] font-extrabold uppercase bg-rose-500/20 text-rose-300 border border-rose-500/50 shadow-xs">
-                                CLOSED (SELESAI)
+                                CLOSED
                             </span>
                         @endif
                     </span>
@@ -110,9 +83,6 @@
                         class="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-[#050d1a] hover:bg-cyan-950 text-cyan-300 font-mono text-xs font-bold border border-cyan-800/60 shadow-xs transition-colors cursor-pointer"
                         title="Klik untuk menyalin kode room"
                     >
-                        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-                        </svg>
                         <span>ROOM: {{ $event->room_code }}</span>
                         <svg class="w-3 h-3 text-slate-400 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -132,17 +102,11 @@
 
                 <div class="flex flex-wrap items-center gap-y-1 gap-x-4 text-xs text-slate-400 pt-1">
                     <div class="flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
                         <span>
                             Mulai: <strong class="text-slate-200">{{ $event->start_time ? $event->start_time->translatedFormat('d M Y, H:i') . ' WIB' : 'Manual / Langsung' }}</strong>
                         </span>
                     </div>
                     <div class="flex items-center gap-1.5">
-                        <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
                         <span>
                             Selesai: <strong class="text-slate-200">{{ $event->end_time ? $event->end_time->translatedFormat('d M Y, H:i') . ' WIB' : 'Ditutup Manual' }}</strong>
                         </span>
@@ -154,8 +118,7 @@
             <div class="flex flex-col items-start lg:items-end gap-3 shrink-0">
                 <!-- Status Live Polling Indicator -->
                 <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#050d1a] border border-cyan-900/60 shadow-xs">
-                    <span id="livePulseDot" class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="text-xs font-bold text-slate-200">Live Auto-Update</span>
+                    <span class="text-xs font-bold text-slate-200">Live Auto Update</span>
                     <span class="text-slate-600">|</span>
                     <span id="pollingStatusText" class="text-[11px] font-mono text-cyan-400">Aktif (3s)</span>
                 </div>
@@ -168,7 +131,7 @@
                         id="btnToggleAutoRefresh"
                         class="px-3 py-1.5 rounded-lg bg-[#0a1832] hover:bg-cyan-950 text-slate-300 hover:text-white text-xs font-semibold border border-cyan-900/60 transition-colors cursor-pointer shadow-xs"
                     >
-                        <span>Jeda Auto-Refresh</span>
+                        <span>Jeda Auto Refresh</span>
                     </button>
 
                     <button
@@ -193,93 +156,37 @@
     </div>
 
     <!-- =========================================================================
-         3. KEY PERFORMANCE METRICS (KPI STATS CARDS)
+         3. KEY PERFORMANCE METRIC - PILIHAN UNGGUL / PEMENANG
          ========================================================================= -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- 1. Total Suara Masuk (Sah) -->
-        <div class="p-5 rounded-2xl bg-[#071226] border border-cyan-950/80 shadow-lg relative overflow-hidden group hover:border-cyan-500/40 transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400">Total Suara Masuk</p>
-                    <h3 id="statTotalVotes" class="text-2xl sm:text-3xl font-black text-white mt-1">
-                        {{ number_format($totalVotes, 0, ',', '.') }}
-                    </h3>
-                </div>
-                <div class="w-12 h-12 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center shadow-md shadow-cyan-950/50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
-                </div>
-            </div>
-            <p class="text-[11px] text-cyan-300/80 mt-2.5 flex items-center gap-1 font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
-                <span>Suara sah terenkripsi di sistem</span>
-            </p>
-        </div>
-
-        <!-- 2. Total DPT Pemilih Terdaftar -->
-        <div class="p-5 rounded-2xl bg-[#071226] border border-cyan-950/80 shadow-lg relative overflow-hidden group hover:border-cyan-500/40 transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400">Total DPT Aktif</p>
-                    <h3 id="statTotalVoters" class="text-2xl sm:text-3xl font-black text-slate-100 mt-1">
-                        {{ number_format($totalVoters, 0, ',', '.') }}
-                    </h3>
-                </div>
-                <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 text-indigo-400 flex items-center justify-center shadow-md shadow-indigo-950/50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                </div>
-            </div>
-            <p class="text-[11px] text-indigo-300/80 mt-2.5 font-medium">
-                Siswa & Guru berhak memilih
-            </p>
-        </div>
-
-        <!-- 3. Tingkat Partisipasi (Turnout %) -->
-        <div class="p-5 rounded-2xl bg-[#071226] border border-cyan-950/80 shadow-lg relative overflow-hidden group hover:border-cyan-500/40 transition-all">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-xs font-semibold text-slate-400">Tingkat Partisipasi</p>
-                    <h3 id="statParticipationRate" class="text-2xl sm:text-3xl font-black text-emerald-400 mt-1">
-                        {{ $participationRate }}%
-                    </h3>
-                </div>
-                <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shadow-md shadow-emerald-950/50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                </div>
-            </div>
-            <!-- Mini Progress Bar Partisipasi -->
-            <div class="w-full bg-[#042438] rounded-full h-1.5 mt-3 overflow-hidden border border-cyan-950">
-                <div id="statParticipationBar" class="bg-linear-to-r from-emerald-500 to-cyan-400 h-1.5 rounded-full transition-all duration-700 ease-out" style="width: {{ min(100, $participationRate) }}%;"></div>
-            </div>
-        </div>
-
-        <!-- 4. Pilihan Unggul Sementara -->
-        <div class="p-5 rounded-2xl bg-[#071226] border border-cyan-950/80 shadow-lg relative overflow-hidden group hover:border-cyan-500/40 transition-all">
-            <div class="flex items-center justify-between">
-                <div class="min-w-0 flex-1 pr-2">
-                    <p class="text-xs font-semibold text-slate-400">Pilihan Unggul</p>
-                    <h3 id="statLeadingCandidate" class="text-base sm:text-lg font-black text-amber-300 mt-1 truncate">
-                        {{ $leadingCandidate ? $leadingCandidate->name : 'Belum Ada Suara' }}
-                    </h3>
-                </div>
-                <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400 flex items-center justify-center shrink-0 shadow-md shadow-amber-950/50">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                </div>
-            </div>
-            <p id="statLeadingSubtitle" class="text-[11px] text-amber-300/80 mt-2.5 truncate font-medium">
-                @if($leadingCandidate && $totalVotes > 0)
-                    {{ $leadingCandidate->votes_count }} Suara ({{ $leadingCandidate->percentage }}%)
+    <div class="grid grid-cols-1 gap-4">
+        <!-- Pilihan Unggul / Pemenang (dinamis berdasarkan status event) -->
+        <div class="p-6 rounded-2xl bg-[#071226] border-2 shadow-lg relative overflow-hidden transition-all duration-300 {{ $event->status === 'CLOSED' ? 'border-amber-500 hover:border-amber-400' : 'border-cyan-500 hover:border-cyan-400' }}">
+            <div class="text-center">
+                @if($event->status === 'CLOSED')
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/40 mb-3">
+                        <span class="text-xs font-bold text-amber-300 uppercase tracking-wide">Pemenang / Hasil Akhir</span>
+                    </div>
                 @else
-                    Menunggu suara masuk
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/40 mb-3">
+                        <span class="text-xs font-bold text-cyan-300 uppercase tracking-wide">Pilihan Yang Sedang Unggul</span>
+                    </div>
                 @endif
-            </p>
+
+                <h3 id="statLeadingCandidate" class="text-2xl sm:text-3xl font-black {{ $event->status === 'CLOSED' ? 'text-amber-300' : 'text-cyan-300' }} mb-2">
+                    {{ $leadingCandidate ? $leadingCandidate->name : 'Belum Ada Suara' }}
+                </h3>
+
+                <p id="statLeadingSubtitle" class="text-sm sm:text-base font-semibold {{ $event->status === 'CLOSED' ? 'text-amber-300/90' : 'text-cyan-300/90' }}">
+                    @if($leadingCandidate && $totalVotes > 0)
+                        <span class="inline-flex items-center gap-2">
+                            <span class="text-white">{{ $leadingCandidate->votes_count }} Suara</span>
+                            <span class="px-2.5 py-0.5 rounded-full {{ $event->status === 'CLOSED' ? 'bg-amber-500/30 text-amber-200' : 'bg-cyan-500/30 text-cyan-200' }} text-xs font-black">{{ $leadingCandidate->percentage }}%</span>
+                        </span>
+                    @else
+                        <span class="text-slate-400">Menunggu suara masuk...</span>
+                    @endif
+                </p>
+            </div>
         </div>
     </div>
 
@@ -316,7 +223,7 @@
                         <div class="flex items-center gap-3.5 min-w-0">
                             <!-- Nomor Urut Badge -->
                             <div class="w-10 h-10 rounded-xl bg-cyan-600/20 text-cyan-300 border border-cyan-400/50 flex items-center justify-center font-black text-sm shrink-0 shadow-xs">
-                                #{{ str_pad($candidate->candidate_number, 2, '0', STR_PAD_LEFT) }}
+                                {{ str_pad($candidate->candidate_number, 2, '0', STR_PAD_LEFT) }}
                             </div>
 
                             <!-- Foto Avatar / Placeholder -->
@@ -366,7 +273,7 @@
                     <div class="w-full bg-[#071226] rounded-full h-3 overflow-hidden border border-cyan-950/80 p-0.5 shadow-inner">
                         <div
                             id="candidateBar-{{ $candidate->id }}"
-                            class="h-full rounded-full bg-linear-to-r from-cyan-600 via-cyan-400 to-emerald-400 transition-all duration-700 ease-out"
+                            class="h-full rounded-full bg-teal-500 transition-all duration-700 ease-out"
                             style="width: {{ min(100, $candidate->percentage) }}%;"
                         ></div>
                     </div>
@@ -386,9 +293,6 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cyan-950/80 pb-4">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
                     <span>Log Aktivitas Partisipasi Pemilih (LUBER & JURDIL)</span>
                 </h2>
                 <p class="text-xs text-slate-400 mt-0.5">
@@ -446,9 +350,6 @@
                             </td>
                             <td class="py-3 px-4 text-center">
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                                    <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
                                     <span>Tercatat Sah</span>
                                 </span>
                             </td>
@@ -520,7 +421,7 @@
         const pulseDot = document.getElementById('livePulseDot');
 
         if (isAutoRefreshActive) {
-            btnToggle.innerHTML = '<span>Jeda Auto-Refresh</span>';
+            btnToggle.innerHTML = '<span>Jeda Auto Refresh</span>';
             btnToggle.classList.remove('text-cyan-400', 'border-cyan-500/50');
             statusText.textContent = 'Aktif (3s)';
             statusText.className = 'text-[11px] font-mono text-cyan-400';
@@ -618,9 +519,6 @@
                             </td>
                             <td class="py-3 px-4 text-center">
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                                    <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                                    </svg>
                                     <span>Tercatat Sah</span>
                                 </span>
                             </td>
@@ -658,9 +556,6 @@
             const btn = document.getElementById('btnCopyRoomCode');
             const originalContent = btn.innerHTML;
             btn.innerHTML = `
-                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                </svg>
                 <span class="text-emerald-300">Tersalin!</span>
             `;
             setTimeout(() => {

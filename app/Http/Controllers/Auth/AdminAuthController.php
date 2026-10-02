@@ -22,11 +22,12 @@ class AdminAuthController extends Controller
                 return redirect()->route('admin.dashboard');
             }
 
-            if (\Illuminate\Support\Facades\Route::has('admin.events.index')) {
-                return redirect()->route('admin.events.index');
+            if ($user->isPetugas() && \Illuminate\Support\Facades\Route::has('petugas.events.index')) {
+                return redirect()->route('petugas.events.index');
             }
 
-            return redirect()->route('admin.login');
+            // Jika tidak ada route yang cocok, logout paksa untuk mencegah loop
+            Auth::guard('web')->logout();
         }
 
         return view('auth.admin-login');
@@ -57,8 +58,8 @@ class AdminAuthController extends Controller
                 return redirect()->intended(route('admin.dashboard'))->with('success', "Selamat datang, {$user->name}.");
             }
 
-            if (\Illuminate\Support\Facades\Route::has('admin.events.index')) {
-                return redirect()->intended(route('admin.events.index'))->with('success', "Selamat datang, {$user->name}.");
+            if (\Illuminate\Support\Facades\Route::has('petugas.events.index')) {
+                return redirect()->intended(route('petugas.events.index'))->with('success', "Selamat datang, {$user->name}.");
             }
 
             return redirect()->route('admin.login')->with('success', "Selamat datang, {$user->name}.");

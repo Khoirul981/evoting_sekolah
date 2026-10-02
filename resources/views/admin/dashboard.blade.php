@@ -9,7 +9,7 @@
     <!-- =========================================================================
          1. BANNER SELAMAT DATANG & DESKRIPSI
          ========================================================================= -->
-    <div class="bg-linear-to-r from-[#1b050c] via-[#150308] to-[#0c1424] border border-rose-900/40 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+    <div class="bg-[#1b050c] border border-rose-900/40 rounded-2xl p-6 shadow-xl relative overflow-hidden">
         <div class="relative z-10">
             <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md text-[11px] font-semibold bg-[#800020]/60 text-rose-200 border border-rose-500/30 mb-3">
                 <span>PANEL ADMINISTRATOR SISTEM</span>
