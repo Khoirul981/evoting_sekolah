@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\User;
 use App\Models\Voter;
 use Illuminate\Http\RedirectResponse;
@@ -103,6 +104,16 @@ class UserController extends Controller
             'role' => $validated['role'],
         ]);
 
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'CREATE_USER',
+            'description' => "Menambahkan akun {$validated['role']} baru dengan nama '{$validated['name']}' dan email '{$validated['email']}'.",
+            'ip_address' => $request->ip(),
+        ]);
+
         $roleLabel = $user->role === 'SUPER_ADMIN' ? 'Super Admin' : 'Petugas';
         $tab = $user->role === 'SUPER_ADMIN' ? 'super_admin' : 'petugas';
 
@@ -137,6 +148,16 @@ class UserController extends Controller
 
         $user->save();
 
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'UPDATE_USER',
+            'description' => "Memperbarui data akun {$user->role} '{$user->name}' (Email: {$user->email})" . (!empty($validated['password']) ? ' dengan perubahan password.' : '.'),
+            'ip_address' => $request->ip(),
+        ]);
+
         $roleLabel = $user->role === 'SUPER_ADMIN' ? 'Super Admin' : 'Petugas';
         $tab = $user->role === 'SUPER_ADMIN' ? 'super_admin' : 'petugas';
 
@@ -159,6 +180,16 @@ class UserController extends Controller
         $userName = $user->name;
 
         $user->delete();
+
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'DELETE_USER',
+            'description' => "Menghapus akun {$roleLabel} '{$userName}' dari sistem.",
+            'ip_address' => request()->ip(),
+        ]);
 
         return redirect()->route('admin.users.index', ['tab' => $tab])
             ->with('success', "Akun {$roleLabel} '{$userName}' berhasil dihapus dari sistem.");
@@ -186,6 +217,16 @@ class UserController extends Controller
             'name' => trim($validated['name']),
             'type' => $validated['type'],
             'is_active' => true,
+        ]);
+
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'CREATE_VOTER',
+            'description' => "Menambahkan pemilih {$validated['type']} baru '{$validated['name']}' dengan NIS/NIP: {$validated['identifier']}.",
+            'ip_address' => $request->ip(),
         ]);
 
         $typeLabel = $voter->type === 'SISWA' ? 'Siswa' : 'Guru';
@@ -216,6 +257,16 @@ class UserController extends Controller
         $voter->type = $validated['type'];
         $voter->save();
 
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'UPDATE_VOTER',
+            'description' => "Memperbarui data pemilih {$voter->type} '{$voter->name}' (NIS/NIP: {$voter->identifier}).",
+            'ip_address' => $request->ip(),
+        ]);
+
         $typeLabel = $voter->type === 'SISWA' ? 'Siswa' : 'Guru';
 
         return redirect()->route('admin.users.index', ['tab' => 'pemilih'])
@@ -232,6 +283,16 @@ class UserController extends Controller
         $voterId = $voter->identifier;
 
         $voter->delete();
+
+        // Audit Log
+        AuditLog::create([
+            'user_id' => Auth::id(),
+            'user_name' => Auth::user()->name,
+            'role' => Auth::user()->role,
+            'action' => 'DELETE_VOTER',
+            'description' => "Menghapus pemilih {$typeLabel} '{$voterName}' (NIS/NIP: {$voterId}) dari sistem.",
+            'ip_address' => request()->ip(),
+        ]);
 
         return redirect()->route('admin.users.index', ['tab' => 'pemilih'])
             ->with('success', "Pemilih {$typeLabel} '{$voterName}' ({$voterId}) berhasil dihapus dari sistem.");

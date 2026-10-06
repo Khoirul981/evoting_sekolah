@@ -203,15 +203,15 @@
 
                         <!-- Foto Kandidat / Ilustrasi Opsi -->
                         <div class="p-5 flex flex-col items-center text-center">
-                            <div class="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl overflow-hidden bg-[#050d1a] border-2 border-cyan-900/60 shadow-lg relative group-hover:border-cyan-400/50 transition-all flex items-center justify-center shrink-0">
+                            <div class="w-full aspect-4/3 rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-inner relative flex items-center justify-center shrink-0">
                                 @if($candidate->photo_url)
                                     <img
                                         src="{{ $candidate->photo_url }}"
                                         alt="{{ $candidate->name }}"
-                                        class="w-full h-full object-cover object-top"
+                                        class="w-full h-full object-cover object-center"
                                     >
                                 @else
-                                    <div class="flex flex-col items-center justify-center p-3 text-cyan-400/60">
+                                    <div class="flex flex-col items-center justify-center p-3 text-slate-500">
                                         <svg class="w-12 h-12 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             @if($event->category === 'KANDIDAT')
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />

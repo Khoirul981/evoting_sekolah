@@ -21,7 +21,7 @@
     </div>
 
     <!-- =========================================================================
-         TOOLBAR: PENCARIAN & FILTER AKSI
+         TOOLBAR: PENCARIAN & FILTER ROLE
          ========================================================================= -->
     <div class="p-4 rounded-2xl bg-[#0c1424] border border-slate-800/80 shadow-sm">
         <form action="{{ route('admin.audit-logs.index') }}" method="GET" class="flex flex-col md:flex-row md:items-center justify-between gap-3">
@@ -37,22 +37,20 @@
                         type="text"
                         name="search"
                         value="{{ request('search') }}"
-                        placeholder="Cari aktivitas / nama pengguna / aksi / IP..."
+                        placeholder="Cari aktivitas / nama pengguna / IP..."
                         class="w-full pl-9 pr-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-rose-500 focus:ring-2 focus:ring-rose-900/30 transition-all"
                     >
                 </div>
 
-                <!-- Dropdown Filter Tipe Aksi -->
+                <!-- Dropdown Filter Role -->
                 <select
-                    name="action"
+                    name="role"
                     class="px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-rose-500 transition-all"
                 >
-                    <option value="">Semua Aksi</option>
-                    @foreach($availableActions as $key => $label)
-                        <option value="{{ $key }}" {{ request('action') === $key ? 'selected' : '' }}>
-                            {{ $key }}
-                        </option>
-                    @endforeach
+                    <option value="">Semua Role</option>
+                    <option value="SUPER_ADMIN" {{ request('role') === 'SUPER_ADMIN' ? 'selected' : '' }}>Super Admin</option>
+                    <option value="PETUGAS" {{ request('role') === 'PETUGAS' ? 'selected' : '' }}>Petugas</option>
+                    <option value="VOTER" {{ request('role') === 'VOTER' ? 'selected' : '' }}>Pemilih</option>
                 </select>
 
                 <button
@@ -62,7 +60,7 @@
                     Cari & Filter
                 </button>
 
-                @if(request('search') || request('action'))
+                @if(request('search') || request('role'))
                     <a
                         href="{{ route('admin.audit-logs.index') }}"
                         class="px-3.5 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 text-xs font-medium border border-rose-800/60 transition-all"
@@ -101,9 +99,6 @@
                             <!-- Kolom Waktu -->
                             <td class="py-3.5 px-4 text-slate-400 whitespace-nowrap font-mono text-[11px]">
                                 <div class="flex items-center gap-1.5">
-                                    <svg class="w-3.5 h-3.5 text-slate-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
                                     <span>{{ $log->created_at ? $log->created_at->translatedFormat('d/m/Y, H:i:s') : '-' }} WIB</span>
                                 </div>
                             </td>
@@ -120,8 +115,12 @@
                                         SUPER_ADMIN
                                     </span>
                                 @elseif($log->role === 'PETUGAS')
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-950/80 text-blue-300 border border-blue-700/60">
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-950/80 text-cyan-300 border border-cyan-700/60">
                                         PETUGAS
+                                    </span>
+                                @elseif($log->role === 'VOTER')
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-white/10 text-white border border-white/30">
+                                        PEMILIH
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
@@ -132,16 +131,7 @@
 
                             <!-- Kolom Aksi -->
                             <td class="py-3.5 px-4 whitespace-nowrap">
-                                @php
-                                    $actionClass = match($log->action) {
-                                        'CHANGE_EVENT_STATUS' => 'bg-amber-950/80 text-amber-300 border-amber-700/60',
-                                        'CREATE_EVENT'        => 'bg-emerald-950/80 text-emerald-300 border-emerald-700/60',
-                                        'UPDATE_EVENT'        => 'bg-sky-950/80 text-sky-300 border-sky-700/60',
-                                        'DELETE_EVENT'        => 'bg-rose-950/80 text-rose-300 border-rose-700/60',
-                                        default               => 'bg-slate-800 text-slate-300 border-slate-700',
-                                    };
-                                @endphp
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border {{ $actionClass }}">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border bg-slate-800 text-slate-300 border-slate-700">
                                     {{ $log->action }}
                                 </span>
                             </td>
@@ -161,9 +151,6 @@
                     @empty
                         <tr>
                             <td colspan="6" class="py-12 text-center text-slate-500">
-                                <svg class="w-10 h-10 mx-auto text-slate-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
                                 <p class="font-semibold text-xs text-slate-400">Belum ada riwayat jejak digital (Audit Log) ditemukan.</p>
                                 <p class="text-[11px] text-slate-500 mt-0.5">Semua aktivitas administratif akan otomatis tercatat di sini.</p>
                             </td>

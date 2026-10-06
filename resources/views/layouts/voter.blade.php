@@ -28,32 +28,12 @@
                     <a href="{{ route('voter.dashboard') }}" class="text-base font-bold tracking-tight text-slate-900 hover:text-slate-700 transition-colors flex items-center gap-2">
                         <span>{{ config('app.name', 'VOTINGYUK') }}</span>
                     </a>
-                    <div class="inline-flex items-center gap-1 px-2 py-0.2 rounded-md text-[10px] font-semibold bg-slate-100 text-slate-700 border border-slate-300">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                        <span>BILIK SUARA DIGITAL</span>
-                    </div>
                 </div>
             </div>
 
-            <!-- Profile & Logout Widget -->
+            <!-- Logout Widget -->
             @auth('voter')
-                @php $voter = Auth::guard('voter')->user(); @endphp
                 <div class="flex items-center gap-3">
-                    <div class="hidden sm:flex items-center gap-2.5 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl">
-                        <div class="w-7 h-7 rounded-lg bg-slate-900 text-white font-bold text-xs flex items-center justify-center">
-                            {{ strtoupper(substr($voter->name, 0, 1)) }}
-                        </div>
-                        <div class="text-left">
-                            <p class="text-xs font-bold text-slate-900 leading-none truncate max-w-40">{{ $voter->name }}</p>
-                            <div class="flex items-center gap-1.5 mt-1">
-                                <span class="font-mono text-[10px] text-slate-600 font-semibold">{{ $voter->identifier }}</span>
-                                <span class="text-[9px] px-1.5 py-0.2 rounded font-bold uppercase {{ $voter->type === 'GURU' ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-sky-100 text-sky-700 border border-sky-200' }}">
-                                    {{ $voter->type }}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Tombol Keluar -->
                     <form method="POST" action="{{ route('voter.logout') }}" class="inline">
                         @csrf
@@ -65,7 +45,7 @@
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
-                            <span class="hidden sm:inline">Logout</span>
+                            <span>Logout</span>
                         </button>
                     </form>
                 </div>
@@ -99,7 +79,6 @@
     <footer class="bg-white border-t border-slate-200/90 py-4 mt-auto">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500 text-center sm:text-left">
             <div class="flex items-center justify-center gap-2">
-                <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
                 <p><strong class="text-slate-700">Asas Pemilihan:</strong> Langsung, Umum, Bebas, Rahasia, Jujur, dan Adil (LUBER JURDIL).</p>
             </div>
             <p class="text-[11px] text-slate-400">&copy; {{ date('Y') }} {{ config('app.name', 'VOTINGYUK') }}. Hak Cipta Dilindungi.</p>

@@ -140,14 +140,11 @@
             @if($errors->any())
                 <div class="p-3.5 rounded-xl bg-rose-950/80 border border-rose-700 text-rose-300 text-xs shadow-sm">
                     <div class="flex items-center gap-2 font-bold mb-1">
-                        <svg class="w-4 h-4 shrink-0 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
                         <span>Terjadi kesalahan pada input:</span>
                     </div>
                     <ul class="list-disc list-inside space-y-0.5 text-rose-200 text-[11px] ml-1">
                         @foreach($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            {{ $error }}
                         @endforeach
                     </ul>
                 </div>

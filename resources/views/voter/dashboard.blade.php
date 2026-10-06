@@ -13,12 +13,8 @@
             </div>
             <div class="min-w-0 flex-1">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase {{ $voter->type === 'GURU' ? 'bg-purple-100 text-purple-700 border border-purple-200' : 'bg-sky-100 text-sky-700 border border-sky-200' }}">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded uppercase border {{ $voter->type === 'GURU' ? 'bg-orange-950/90 text-orange-400 border-orange-700/70' : 'bg-cyan-950/80 text-cyan-300 border-cyan-700/60' }}">
                         {{ $voter->type }}
-                    </span>
-                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-                        DPT Aktif
                     </span>
                 </div>
                 <h1 class="text-sm font-bold text-slate-900 truncate mt-1">
@@ -33,17 +29,11 @@
 
     <!-- Card Utama: Masukkan Kode Room (Tema Putih Bersih, Centered) -->
     <div class="bg-white border border-slate-200/90 rounded-2xl p-6 sm:p-7 shadow-sm text-center">
-        <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 text-slate-900 flex items-center justify-center mx-auto mb-3.5 shadow-2xs">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
-            </svg>
-        </div>
-
         <h2 class="text-xl font-bold text-slate-900 tracking-tight">
             Ketik Kode Room
         </h2>
         <p class="text-xs text-slate-600 mt-1 max-w-xs mx-auto">
-            Masukkan kode ruangan yang diberikan oleh petugas pemilihan untuk membuka bilik suara.
+            Masukkan kode ruangan yang diberikan oleh petugas pemilihan event untuk membuka bilik suara.
         </p>
 
         <!-- Form Input Kode Room -->
@@ -61,7 +51,7 @@
                     required
                     autofocus
                     autocomplete="off"
-                    class="w-full py-3.5 px-4 bg-slate-50 border-2 @error('room_code') border-rose-500 @else border-slate-300 hover:border-slate-400 @enderror focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-xl text-center text-slate-900 placeholder:text-slate-400 text-lg font-mono font-bold tracking-widest uppercase transition-all shadow-inner"
+                    class="w-full py-3.5 px-4 bg-slate-50 border-2 @error('room_code') border-rose-500 @else border-slate-300 hover:border-slate-400 @enderror focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-xl text-center text-slate-900 placeholder:text-slate-400 text-2xl font-mono font-bold tracking-widest uppercase transition-all shadow-inner"
                 >
 
                 @error('room_code')
@@ -80,9 +70,6 @@
                 class="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 active:bg-black text-white font-semibold rounded-xl text-base shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
                 <span>Masuk Bilik Suara</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
             </button>
         </form>
     </div>

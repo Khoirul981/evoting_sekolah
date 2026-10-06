@@ -23,20 +23,19 @@
                     <span>Ganti Ruangan</span>
                 </a>
 
-                <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg uppercase {{ $event->category === 'KANDIDAT' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-amber-50 text-amber-700 border border-amber-200' }}">
-                    {{ $event->category === 'KANDIDAT' ? 'Pemilihan Kandidat' : 'Jajak Pendapat / Opsi' }}
+                <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg uppercase {{ $event->category === 'KANDIDAT' ? 'bg-indigo-500 text-white' : 'bg-amber-500 text-white' }}">
+                    {{ $event->category }}
                 </span>
             </div>
 
             <!-- Kode Ruangan & Status Bilik -->
             <div class="flex items-center gap-2.5 flex-wrap">
-                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900 text-white font-mono text-xs font-bold shadow-2xs">
-                    <span class="text-slate-400 text-[10px] uppercase">KODE ROOM:</span>
-                    <span class="text-emerald-400 tracking-wider">{{ $event->room_code }}</span>
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border-2 border-cyan-500 text-slate-900 font-mono text-xs font-bold shadow-2xs">
+                    <span class="text-slate-500 text-[10px] uppercase">KODE ROOM:</span>
+                    <span class="text-cyan-600 tracking-wider">{{ $event->room_code }}</span>
                 </div>
 
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200">
-                    <span class="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white text-red-600 border-2 border-red-500">
                     <span>SIAP MENCOBLOS</span>
                 </span>
             </div>
@@ -54,20 +53,13 @@
                 </p>
             @endif
 
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 pt-3.5 border-t border-slate-100 text-xs text-slate-500 font-medium">
-                <span class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                    </svg>
-                    <span>Total <strong>{{ $candidates->count() }}</strong> {{ $event->category === 'KANDIDAT' ? 'Kandidat Paslon' : 'Pilihan Opsi' }}</span>
+            <div class="flex flex-wrap items-center gap-x-5 gap-y-2 mt-4 pt-3.5 border-t-2 border-slate-200 text-sm font-medium">
+                <span class="flex items-center gap-1.5 text-slate-700">
+                    <span class="text-slate-500">Total</span>
+                    <span class="font-bold">{{ $candidates->count() }}</span>
+                    <span class="font-bold">{{ $event->category === 'KANDIDAT' ? 'Kandidat' : 'Opsi' }}</span>
                 </span>
 
-                <span class="flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    <span>Asas Pemilihan: Langsung, Umum, Bebas, <strong>Rahasia (LUBER)</strong></span>
-                </span>
             </div>
         </div>
     </div>
@@ -88,17 +80,17 @@
                 <div class="bg-white border border-slate-200/90 hover:border-slate-400 rounded-2xl p-5 shadow-xs hover:shadow-md transition-all flex flex-col justify-between gap-5 group">
                     <div class="space-y-4">
                         <!-- Top Header Card: No Urut & Label -->
-                        <div class="flex items-center justify-between gap-2">
+                        <div class="flex items-center justify-between gap-4">
                             <div class="flex items-center gap-2">
-                                <span class="w-8 h-8 rounded-xl bg-slate-900 text-white font-extrabold text-sm flex items-center justify-center shadow-xs">
-                                    #{{ $candidate->candidate_number }}
+                                <span class="w-8 h-8 rounded-xl bg-white border-2 border-cyan-500 text-cyan-600 font-extrabold text-sm flex items-center justify-center shadow-xs">
+                                    {{ $candidate->candidate_number }}
                                 </span>
                                 <span class="text-xs font-bold text-slate-700 uppercase tracking-wider">
                                     {{ $event->category === 'KANDIDAT' ? 'Kandidat ' . $candidate->candidate_number : 'Opsi ' . $candidate->candidate_number }}
                                 </span>
                             </div>
 
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
+                            <span class="text-[10px] font-semibold text-red-600 uppercase tracking-wider bg-white border-2 border-red-500 px-2 py-0.5 rounded">
                                 Surat Suara
                             </span>
                         </div>
@@ -124,7 +116,7 @@
                         </div>
 
                         <!-- Nama Kandidat -->
-                        <div>
+                        <div class="text-center">
                             <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                                 {{ $candidate->name }}
                             </h3>
@@ -136,7 +128,6 @@
                                 @if($candidate->vision)
                                     <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
                                         <h4 class="font-bold text-slate-900 text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
                                             Visi
                                         </h4>
                                         <p class="text-slate-600 leading-relaxed italic">
@@ -148,12 +139,11 @@
                                 @if($candidate->mission)
                                     <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70">
                                         <h4 class="font-bold text-slate-900 text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
                                             Misi
                                         </h4>
-                                        <div class="text-slate-600 leading-relaxed whitespace-pre-line">
+                                        <p class="text-slate-600 leading-relaxed">
                                             {{ $candidate->mission }}
-                                        </div>
+                                        </p>
                                     </div>
                                 @endif
                             </div>
@@ -177,12 +167,9 @@
                         <button
                             type="button"
                             onclick="openVoteModal({{ $candidate->id }}, '{{ $candidate->candidate_number }}', '{{ addslashes($candidate->name) }}')"
-                            class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                            class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold rounded-xl text-xs sm:text-sm shadow-xs hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <span>{{ $event->category === 'KANDIDAT' ? 'COBLOS KANDIDAT #' . $candidate->candidate_number : 'PILIH OPSI #' . $candidate->candidate_number }}</span>
+                            <span>{{ $event->category === 'KANDIDAT' ? 'COBLOS KANDIDAT' : 'PILIH OPSI' }}</span>
                         </button>
                     </div>
                 </div>
@@ -206,11 +193,6 @@
 
         <!-- Header Modal -->
         <div class="text-center">
-            <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-3.5 shadow-2xs">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </div>
 
             <h3 id="modalTitle" class="text-xl font-bold text-slate-900 tracking-tight">
                 Konfirmasi Pilihan Suara
@@ -222,8 +204,8 @@
 
         <!-- Box Kandidat Terpilih -->
         <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 text-center space-y-1.5">
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-slate-900 text-white font-mono text-[11px] font-extrabold uppercase">
-                <span id="modalCandidateNumber">#1</span>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-white border-2 border-cyan-500 text-cyan-600 font-mono text-[11px] font-extrabold uppercase">
+                <span id="modalCandidateNumber">1</span>
             </div>
             <h4 id="modalCandidateName" class="text-base font-extrabold text-slate-900">
                 Nama Kandidat
@@ -235,9 +217,6 @@
 
         <!-- Warning Callout -->
         <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5">
-            <svg class="w-4 h-4 text-amber-600 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
-            </svg>
             <p class="leading-relaxed">
                 Pilihan suara Anda bersifat <strong>rahasia</strong>, <strong>permanen</strong>, dan <strong>tidak dapat diubah</strong> setelah dikirimkan.
             </p>
@@ -265,13 +244,9 @@
                 <button
                     type="submit"
                     id="btnSubmitVote"
-                    class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold rounded-xl text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                    class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold rounded-xl text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                     <span>Ya, Coblos Sekarang!</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
-                    </svg>
-                </button>
             </div>
         </form>
 
@@ -283,7 +258,7 @@
 <script>
     function openVoteModal(id, number, name) {
         document.getElementById('modalCandidateId').value = id;
-        document.getElementById('modalCandidateNumber').textContent = '#' + number;
+        document.getElementById('modalCandidateNumber').textContent = number;
         document.getElementById('modalCandidateName').textContent = name;
 
         const modal = document.getElementById('voteModal');

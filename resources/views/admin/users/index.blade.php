@@ -111,9 +111,6 @@
                     onclick="openModal('modalAddSuperAdmin')"
                     class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#800020] hover:bg-[#990026] text-white text-xs font-bold border border-rose-600/40 shadow-md shadow-rose-950/60 transition-all cursor-pointer whitespace-nowrap"
                 >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
                     <span>Tambah Super Admin</span>
                 </button>
             </div>
@@ -258,9 +255,6 @@
                     onclick="openModal('modalAddPetugas')"
                     class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#800020] hover:bg-[#990026] text-white text-xs font-bold border border-rose-600/40 shadow-md shadow-rose-950/60 transition-all cursor-pointer whitespace-nowrap"
                 >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
                     <span>Tambah Petugas</span>
                 </button>
             </div>
@@ -401,9 +395,6 @@
                     onclick="openModal('modalAddVoter')"
                     class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#800020] hover:bg-[#990026] text-white text-xs font-bold border border-rose-600/40 shadow-md shadow-rose-950/60 transition-all cursor-pointer whitespace-nowrap"
                 >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                    </svg>
                     <span>Tambah Pemilih</span>
                 </button>
             </div>
@@ -520,12 +511,34 @@
 
             <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
-                <input type="password" name="password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                <div class="relative">
+                    <input type="password" id="passwordAddSuperAdmin" name="password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                    <button type="button" onclick="togglePassword('passwordAddSuperAdmin', 'eyeAddSuperAdmin', 'eyeSlashAddSuperAdmin')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                        <svg id="eyeAddSuperAdmin" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg id="eyeSlashAddSuperAdmin" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" required minlength="6" placeholder="Ulangi password" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                <div class="relative">
+                    <input type="password" id="passwordConfirmAddSuperAdmin" name="password_confirmation" required minlength="6" placeholder="Ulangi password" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                    <button type="button" onclick="togglePassword('passwordConfirmAddSuperAdmin', 'eyeConfirmAddSuperAdmin', 'eyeSlashConfirmAddSuperAdmin')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                        <svg id="eyeConfirmAddSuperAdmin" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg id="eyeSlashConfirmAddSuperAdmin" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
@@ -564,12 +577,34 @@
 
             <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Password</label>
-                <input type="password" name="password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                <div class="relative">
+                    <input type="password" id="passwordAddPetugas" name="password" required minlength="6" placeholder="Minimal 6 karakter" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                    <button type="button" onclick="togglePassword('passwordAddPetugas', 'eyeAddPetugas', 'eyeSlashAddPetugas')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                        <svg id="eyeAddPetugas" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg id="eyeSlashAddPetugas" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div>
                 <label class="block text-xs font-semibold text-slate-300 mb-1">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" required minlength="6" placeholder="Ulangi password" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                <div class="relative">
+                    <input type="password" id="passwordConfirmAddPetugas" name="password_confirmation" required minlength="6" placeholder="Ulangi password" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                    <button type="button" onclick="togglePassword('passwordConfirmAddPetugas', 'eyeConfirmAddPetugas', 'eyeSlashConfirmAddPetugas')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                        <svg id="eyeConfirmAddPetugas" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg id="eyeSlashConfirmAddPetugas" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
@@ -611,18 +646,40 @@
                 <div class="space-y-3">
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Password Baru</label>
-                        <input type="password" name="password" minlength="6" placeholder="Opsional (min. 6 karakter)" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                        <div class="relative">
+                            <input type="password" id="passwordEditUser" name="password" minlength="6" placeholder="Opsional (min. 6 karakter)" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                            <button type="button" onclick="togglePassword('passwordEditUser', 'eyeEditUser', 'eyeSlashEditUser')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                                <svg id="eyeEditUser" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eyeSlashEditUser" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Konfirmasi Password Baru</label>
-                        <input type="password" name="password_confirmation" minlength="6" placeholder="Ulangi password baru" class="w-full px-3 py-2 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                        <div class="relative">
+                            <input type="password" id="passwordConfirmEditUser" name="password_confirmation" minlength="6" placeholder="Ulangi password baru" class="w-full px-3 py-2 pr-10 bg-[#070e1c] border border-slate-800 rounded-xl text-xs text-white placeholder:text-slate-600 focus:outline-none focus:border-rose-500">
+                            <button type="button" onclick="togglePassword('passwordConfirmEditUser', 'eyeConfirmEditUser', 'eyeSlashConfirmEditUser')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300">
+                                <svg id="eyeConfirmEditUser" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eyeSlashConfirmEditUser" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
                 <button type="button" onclick="closeModal('modalEditUser')" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer">Batal</button>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer">Simpan Perubahan</button>
+                <button type="submit" class="px-4 py-2 rounded-xl bg-[#800020] hover:bg-[#990026] text-white text-xs font-bold shadow-md shadow-rose-950/60 transition-all cursor-pointer">Simpan Perubahan</button>
             </div>
         </form>
     </div>
@@ -744,7 +801,7 @@
 
             <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-800">
                 <button type="button" onclick="closeModal('modalEditVoter')" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-all cursor-pointer">Batal</button>
-                <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-md transition-all cursor-pointer">Simpan Perubahan</button>
+                <button type="submit" class="px-4 py-2 rounded-xl bg-[#800020] hover:bg-[#990026] text-white text-xs font-bold shadow-md shadow-rose-950/60 transition-all cursor-pointer">Simpan Perubahan</button>
             </div>
         </form>
     </div>
@@ -755,11 +812,6 @@
      ========================================================================= -->
 <div id="modalDeleteVoter" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
     <div class="w-full max-w-sm rounded-2xl bg-[#0c1424] border border-rose-900/60 p-6 shadow-2xl space-y-4">
-        <div class="w-10 h-10 rounded-xl bg-rose-950/80 border border-rose-600/40 text-rose-400 flex items-center justify-center mx-auto">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-        </div>
 
         <div class="text-center space-y-1">
             <h3 class="text-sm font-bold text-white">Konfirmasi Hapus Pemilih</h3>
@@ -845,5 +897,22 @@
             modals.forEach(id => closeModal(id));
         }
     });
+
+    // Toggle Password Visibility
+    function togglePassword(inputId, eyeOpenId, eyeSlashId) {
+        const input = document.getElementById(inputId);
+        const eyeOpen = document.getElementById(eyeOpenId);
+        const eyeSlash = document.getElementById(eyeSlashId);
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            eyeOpen.classList.add('hidden');
+            eyeSlash.classList.remove('hidden');
+        } else {
+            input.type = 'password';
+            eyeOpen.classList.remove('hidden');
+            eyeSlash.classList.add('hidden');
+        }
+    }
 </script>
 @endpush

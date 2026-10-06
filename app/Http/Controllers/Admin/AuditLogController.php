@@ -22,27 +22,18 @@ class AuditLogController extends Controller
             $query->where(function ($q) use ($searchTerm) {
                 $q->where('user_name', 'like', '%' . $searchTerm . '%')
                   ->orWhere('description', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('action', 'like', '%' . $searchTerm . '%')
                   ->orWhere('ip_address', 'like', '%' . $searchTerm . '%');
             });
         }
 
-        // Filter spesifik berdasarkan Tipe Aksi
-        if ($request->filled('action')) {
-            $query->where('action', $request->action);
+        // Filter spesifik berdasarkan Role
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
         }
 
         // Pagination 15 per halaman dengan order terbaru
         $logs = $query->latest()->paginate(15)->withQueryString();
 
-        // Daftar aksi utama untuk dropdown filter
-        $availableActions = [
-            'CHANGE_EVENT_STATUS' => 'CHANGE_EVENT_STATUS (Perubahan Status Event)',
-            'CREATE_EVENT'        => 'CREATE_EVENT (Pembuatan Event Baru)',
-            'UPDATE_EVENT'        => 'UPDATE_EVENT (Pembaruan Data Event)',
-            'DELETE_EVENT'        => 'DELETE_EVENT (Penghapusan Event)',
-        ];
-
-        return view('admin.audit_logs.index', compact('logs', 'availableActions'));
+        return view('admin.audit_logs.index', compact('logs'));
     }
 }

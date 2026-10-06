@@ -109,7 +109,7 @@ class VoterDashboardController extends Controller
         // Cek apakah event memiliki minimal 2 kandidat
         if ($event->candidates()->count() < 2) {
             return back()->withErrors([
-                'room_code' => "Event '{$event->title}' belum siap (belum memiliki minimal 2 pilihan). Hubungi petugas pemilihan.",
+                'room_code' => "Event '{$event->title}' belum siap (belum memiliki minimal 2 pilihan). Hubungi petugas pemilihan eventnya.",
             ])->onlyInput('room_code');
         }
 

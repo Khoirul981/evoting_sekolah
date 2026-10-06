@@ -35,7 +35,11 @@ class MonitoringController extends Controller
                 return $candidate;
             });
 
-        $leadingCandidate = $totalVotes > 0 ? $candidates->sortByDesc('votes_count')->first() : null;
+        // Deteksi SERI: cek apakah ada kandidat dengan suara tertinggi yang sama
+        $maxVotes = $candidates->max('votes_count');
+        $leadingCandidates = $candidates->where('votes_count', $maxVotes)->values();
+        $isTied = $totalVotes > 0 && $leadingCandidates->count() > 1;
+        $leadingCandidate = $totalVotes > 0 ? $leadingCandidates->first() : null;
 
         $recentParticipations = $event->participations()
             ->with('voter')
@@ -50,6 +54,8 @@ class MonitoringController extends Controller
             'participationRate',
             'candidates',
             'leadingCandidate',
+            'leadingCandidates',
+            'isTied',
             'recentParticipations'
         ));
     }
@@ -79,6 +85,11 @@ class MonitoringController extends Controller
                 ];
             });
 
+        // Deteksi SERI untuk API
+        $maxVotes = $candidates->max('votes_count');
+        $leadingCandidates = $candidates->where('votes_count', $maxVotes)->values();
+        $isTied = $totalVotes > 0 && $leadingCandidates->count() > 1;
+
         $recentVoters = $event->participations()
             ->with('voter')
             ->whereNotNull('voted_at')
@@ -102,6 +113,8 @@ class MonitoringController extends Controller
             'total_votes' => $totalVotes,
             'participation_rate' => $participationRate,
             'candidates' => $candidates,
+            'is_tied' => $isTied,
+            'leading_candidates' => $leadingCandidates,
             'recent_voters' => $recentVoters,
             'server_time' => Carbon::now()->translatedFormat('H:i:s') . ' WIB',
         ]);

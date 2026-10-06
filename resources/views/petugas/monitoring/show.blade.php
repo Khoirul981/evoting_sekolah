@@ -114,44 +114,7 @@
                 </div>
             </div>
 
-            <!-- Kontrol Realtime Live Stream & Timestamp -->
-            <div class="flex flex-col items-start lg:items-end gap-3 shrink-0">
-                <!-- Status Live Polling Indicator -->
-                <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#050d1a] border border-cyan-900/60 shadow-xs">
-                    <span class="text-xs font-bold text-slate-200">Live Auto Update</span>
-                    <span class="text-slate-600">|</span>
-                    <span id="pollingStatusText" class="text-[11px] font-mono text-cyan-400">Aktif (3s)</span>
-                </div>
 
-                <!-- Tombol Toggle Polling & Refresh Manual -->
-                <div class="flex items-center gap-2">
-                    <button
-                        type="button"
-                        onclick="toggleAutoRefresh()"
-                        id="btnToggleAutoRefresh"
-                        class="px-3 py-1.5 rounded-lg bg-[#0a1832] hover:bg-cyan-950 text-slate-300 hover:text-white text-xs font-semibold border border-cyan-900/60 transition-colors cursor-pointer shadow-xs"
-                    >
-                        <span>Jeda Auto Refresh</span>
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="fetchLiveMetrics()"
-                        id="btnManualRefresh"
-                        class="p-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
-                        title="Muat ulang data sekarang"
-                    >
-                        <svg id="refreshIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Waktu Terakhir Diperbarui -->
-                <p class="text-[10px] text-slate-400 font-mono">
-                    Pembaruan terakhir: <span id="lastUpdatedTime" class="text-cyan-300 font-bold">{{ now()->translatedFormat('H:i:s') }} WIB</span>
-                </p>
-            </div>
         </div>
     </div>
 
@@ -160,32 +123,54 @@
          ========================================================================= -->
     <div class="grid grid-cols-1 gap-4">
         <!-- Pilihan Unggul / Pemenang (dinamis berdasarkan status event) -->
-        <div class="p-6 rounded-2xl bg-[#071226] border-2 shadow-lg relative overflow-hidden transition-all duration-300 {{ $event->status === 'CLOSED' ? 'border-amber-500 hover:border-amber-400' : 'border-cyan-500 hover:border-cyan-400' }}">
+        <div class="p-6 rounded-2xl bg-[#071226] border-2 shadow-lg relative overflow-hidden transition-all duration-300 {{ $isTied ? 'border-rose-500 hover:border-rose-400' : ($event->status === 'CLOSED' ? 'border-amber-500 hover:border-amber-400' : 'border-cyan-500 hover:border-cyan-400') }}">
             <div class="text-center">
-                @if($event->status === 'CLOSED')
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/40 mb-3">
-                        <span class="text-xs font-bold text-amber-300 uppercase tracking-wide">Pemenang / Hasil Akhir</span>
+                @if($isTied)
+                    <!-- TAMPILAN SERI -->
+                    <div class="space-y-3">
+                        <h3 class="text-2xl sm:text-3xl font-black text-rose-400 mb-2">
+                            HASIL SERI
+                        </h3>
+
+                        <div class="inline-block px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/30">
+                            <p class="text-sm text-rose-300 font-semibold">
+                                {{ $leadingCandidates->count() }} {{ $event->category === 'KANDIDAT' ? 'Kandidat' : 'Opsi' }} Memiliki Suara Yang Sama
+                            </p>
+                        </div>
+
+                        <div class="flex flex-wrap justify-center gap-2 mt-3">
+                            @foreach($leadingCandidates as $tied)
+                                <span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm font-bold">
+                                    {{ $tied->name }}: {{ $tied->votes_count }} Suara
+                                </span>
+                            @endforeach
+                        </div>
+
+                        <p class="text-xs text-slate-400 mt-3 max-w-md mx-auto">
+                            @if($event->status === 'CLOSED')
+                                <span class="text-rose-400 font-semibold">Status:</span> Menunggu keputusan dari Petugas Penyelenggara Event
+                            @else
+                                <span class="text-rose-400 font-semibold">Status:</span> Voting masih berlangsung, hasil dapat berubah sewaktu-waktu
+                            @endif
+                        </p>
                     </div>
                 @else
-                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/40 mb-3">
-                        <span class="text-xs font-bold text-cyan-300 uppercase tracking-wide">Pilihan Yang Sedang Unggul</span>
-                    </div>
+                    <!-- TAMPILAN NORMAL (ADA PEMENANG JELAS) -->
+                    <h3 id="statLeadingCandidate" class="text-2xl sm:text-3xl font-black {{ $event->status === 'CLOSED' ? 'text-amber-300' : 'text-cyan-300' }} mb-2">
+                        {{ $leadingCandidate ? $leadingCandidate->name : 'Belum Ada Suara' }}
+                    </h3>
+
+                    <p id="statLeadingSubtitle" class="text-sm sm:text-base font-semibold {{ $event->status === 'CLOSED' ? 'text-amber-300/90' : 'text-cyan-300/90' }}">
+                        @if($leadingCandidate && $totalVotes > 0)
+                            <span class="inline-flex items-center gap-2">
+                                <span class="text-white">{{ $leadingCandidate->votes_count }} Suara</span>
+                                <span class="px-2.5 py-0.5 rounded-full {{ $event->status === 'CLOSED' ? 'bg-amber-500/30 text-amber-200' : 'bg-cyan-500/30 text-cyan-200' }} text-xs font-black">{{ $leadingCandidate->percentage }}%</span>
+                            </span>
+                        @else
+                            <span class="text-slate-400">Menunggu suara masuk...</span>
+                        @endif
+                    </p>
                 @endif
-
-                <h3 id="statLeadingCandidate" class="text-2xl sm:text-3xl font-black {{ $event->status === 'CLOSED' ? 'text-amber-300' : 'text-cyan-300' }} mb-2">
-                    {{ $leadingCandidate ? $leadingCandidate->name : 'Belum Ada Suara' }}
-                </h3>
-
-                <p id="statLeadingSubtitle" class="text-sm sm:text-base font-semibold {{ $event->status === 'CLOSED' ? 'text-amber-300/90' : 'text-cyan-300/90' }}">
-                    @if($leadingCandidate && $totalVotes > 0)
-                        <span class="inline-flex items-center gap-2">
-                            <span class="text-white">{{ $leadingCandidate->votes_count }} Suara</span>
-                            <span class="px-2.5 py-0.5 rounded-full {{ $event->status === 'CLOSED' ? 'bg-amber-500/30 text-amber-200' : 'bg-cyan-500/30 text-cyan-200' }} text-xs font-black">{{ $leadingCandidate->percentage }}%</span>
-                        </span>
-                    @else
-                        <span class="text-slate-400">Menunggu suara masuk...</span>
-                    @endif
-                </p>
             </div>
         </div>
     </div>
@@ -206,9 +191,23 @@
                     Grafik perolehan persentase dan akumulasi total suara sah masuk secara langsung.
                 </p>
             </div>
-            <span class="text-xs text-slate-400 bg-[#050d1a] px-3 py-1.5 rounded-lg border border-cyan-950">
-                Total Pilihan: <strong class="text-cyan-300">{{ $candidates->count() }} Pilihan</strong>
-            </span>
+            <div class="flex items-center gap-3 flex-wrap">
+                <span class="text-xs text-slate-400 bg-[#050d1a] px-3 py-1.5 rounded-lg border border-cyan-950">
+                    Total Pilihan: <strong class="text-cyan-300">{{ $candidates->count() }} Pilihan</strong>
+                </span>
+                <button
+                    type="button"
+                    onclick="fetchLiveMetrics()"
+                    id="btnManualRefresh"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition-all active:scale-95 cursor-pointer shadow-xs"
+                    title="Muat ulang data sekarang"
+                >
+                    <svg id="refreshIcon" class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Muat Ulang</span>
+                </button>
+            </div>
         </div>
 
         <!-- Container List Kandidat / Opsi dengan Progress Bar Visual -->
@@ -228,14 +227,18 @@
 
                             <!-- Foto Avatar / Placeholder -->
                             @if($candidate->photo)
-                                <img
-                                    src="{{ asset('storage/' . $candidate->photo) }}"
-                                    alt="{{ $candidate->name }}"
-                                    class="w-11 h-11 rounded-xl object-cover border border-cyan-900/60 shrink-0 shadow-xs"
-                                >
+                                <div class="w-32 aspect-4/3 rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 flex items-center justify-center relative shadow-inner shrink-0">
+                                    <img
+                                        src="{{ asset('storage/' . $candidate->photo) }}"
+                                        alt="{{ $candidate->name }}"
+                                        class="w-full h-full object-cover object-center"
+                                    >
+                                </div>
                             @else
-                                <div class="w-11 h-11 rounded-xl bg-[#071226] border border-cyan-900/60 text-cyan-400 flex items-center justify-center font-bold text-xs shrink-0">
-                                    {{ $candidate->candidate_number }}
+                                <div class="w-32 aspect-4/3 rounded-xl bg-slate-100 border border-slate-200/80 text-slate-500 flex items-center justify-center shrink-0">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
                                 </div>
                             @endif
 
@@ -379,62 +382,6 @@
      ========================================================================= -->
 @push('scripts')
 <script>
-    let isAutoRefreshActive = true;
-    let pollingInterval = null;
-    const POLLING_DELAY_MS = 3000; // Polling data setiap 3 detik
-
-    // Inisialisasi polling saat dokumen siap
-    document.addEventListener('DOMContentLoaded', function () {
-        startAutoRefresh();
-    });
-
-    function startAutoRefresh() {
-        if (pollingInterval) clearInterval(pollingInterval);
-        isAutoRefreshActive = true;
-        updatePollingUIState();
-
-        pollingInterval = setInterval(function () {
-            if (isAutoRefreshActive) {
-                fetchLiveMetrics();
-            }
-        }, POLLING_DELAY_MS);
-    }
-
-    function stopAutoRefresh() {
-        if (pollingInterval) clearInterval(pollingInterval);
-        isAutoRefreshActive = false;
-        updatePollingUIState();
-    }
-
-    function toggleAutoRefresh() {
-        if (isAutoRefreshActive) {
-            stopAutoRefresh();
-        } else {
-            startAutoRefresh();
-            fetchLiveMetrics();
-        }
-    }
-
-    function updatePollingUIState() {
-        const btnToggle = document.getElementById('btnToggleAutoRefresh');
-        const statusText = document.getElementById('pollingStatusText');
-        const pulseDot = document.getElementById('livePulseDot');
-
-        if (isAutoRefreshActive) {
-            btnToggle.innerHTML = '<span>Jeda Auto Refresh</span>';
-            btnToggle.classList.remove('text-cyan-400', 'border-cyan-500/50');
-            statusText.textContent = 'Aktif (3s)';
-            statusText.className = 'text-[11px] font-mono text-cyan-400';
-            pulseDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse';
-        } else {
-            btnToggle.innerHTML = '<span>Lanjutkan Auto-Refresh</span>';
-            btnToggle.classList.add('text-cyan-400', 'border-cyan-500/50');
-            statusText.textContent = 'Dijeda';
-            statusText.className = 'text-[11px] font-mono text-slate-400';
-            pulseDot.className = 'w-2.5 h-2.5 rounded-full bg-slate-500';
-        }
-    }
-
     // Ambil metrik terbaru via AJAX tanpa refresh halaman
     async function fetchLiveMetrics() {
         const refreshIcon = document.getElementById('refreshIcon');
@@ -452,37 +399,59 @@
 
             const data = await response.json();
 
-            // 1. Update KPI Stats
-            const statTotalVotes = document.getElementById('statTotalVotes');
-            const statTotalVoters = document.getElementById('statTotalVoters');
-            const statParticipationRate = document.getElementById('statParticipationRate');
-            const statParticipationBar = document.getElementById('statParticipationBar');
-            const lastUpdatedTime = document.getElementById('lastUpdatedTime');
+            // 1. Update Leading Candidate atau Status Seri
+            const leadingCard = document.querySelector('.p-6.rounded-2xl.bg-\\[\\#071226\\].border-2');
+            if (leadingCard) {
+                const isClosed = data.event_status === 'CLOSED';
+                let borderColor;
+                if (data.is_tied) {
+                    borderColor = 'border-rose-500 hover:border-rose-400';
+                } else {
+                    borderColor = isClosed ? 'border-amber-500 hover:border-amber-400' : 'border-cyan-500 hover:border-cyan-400';
+                }
+                leadingCard.className = `p-6 rounded-2xl bg-[#071226] border-2 shadow-lg relative overflow-hidden transition-all duration-300 ${borderColor}`;
 
-            if (statTotalVotes) statTotalVotes.textContent = Number(data.total_votes).toLocaleString('id-ID');
-            if (statTotalVoters) statTotalVoters.textContent = Number(data.total_voters).toLocaleString('id-ID');
-            if (statParticipationRate) statParticipationRate.textContent = data.participation_rate + '%';
-            if (statParticipationBar) statParticipationBar.style.width = Math.min(100, data.participation_rate) + '%';
-            if (lastUpdatedTime) lastUpdatedTime.textContent = data.server_time;
+                const centerDiv = leadingCard.querySelector('.text-center');
+                if (centerDiv && data.is_tied) {
+                    // SERI - Update tampilan
+                    centerDiv.innerHTML = `
+                        <div class="space-y-3">
+                            <h3 class="text-2xl sm:text-3xl font-black text-rose-400 mb-2">⚠️ HASIL SERI</h3>
+                            <div class="inline-block px-4 py-2 rounded-xl bg-rose-500/10 border border-rose-500/30">
+                                <p class="text-sm text-rose-300 font-semibold">${data.leading_candidates.length} ${data.event_status === 'KANDIDAT' ? 'Kandidat' : 'Opsi'} Memiliki Suara Yang Sama</p>
+                            </div>
+                            <div class="flex flex-wrap justify-center gap-2 mt-3">
+                                ${data.leading_candidates.map(c => `<span class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-white text-sm font-bold">${c.name}: ${c.votes_count} Suara</span>`).join('')}
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3 max-w-md mx-auto">
+                                <span class="${isClosed ? 'text-amber-300' : 'text-cyan-300'} font-semibold">Status:</span> ${isClosed ? 'Menunggu keputusan dari Petugas Penyelenggara Event' : 'Voting masih berlangsung, hasil dapat berubah sewaktu-waktu'}
+                            </p>
+                        </div>
+                    `;
+                } else if (centerDiv) {
+                    // TIDAK SERI - Tampilan normal
+                    let leading = null;
+                    if (data.candidates && data.candidates.length > 0 && data.total_votes > 0) {
+                        leading = [...data.candidates].sort((a, b) => b.votes_count - a.votes_count)[0];
+                    }
 
-            // 2. Update Leading Candidate
-            let leading = null;
-            if (data.candidates && data.candidates.length > 0 && data.total_votes > 0) {
-                leading = [...data.candidates].sort((a, b) => b.votes_count - a.votes_count)[0];
+                    centerDiv.innerHTML = `
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${isClosed ? 'bg-amber-500/20 border border-amber-500/40' : 'bg-cyan-500/20 border border-cyan-500/40'} mb-3">
+                            <span class="text-xs font-bold ${isClosed ? 'text-amber-300' : 'text-cyan-300'} uppercase tracking-wide">${isClosed ? '🏆 Pemenang / Hasil Akhir' : 'Pilihan Yang Sedang Unggul'}</span>
+                        </div>
+                        <h3 id="statLeadingCandidate" class="text-2xl sm:text-3xl font-black ${isClosed ? 'text-amber-300' : 'text-cyan-300'} mb-2">
+                            ${leading ? leading.name : 'Belum Ada Suara'}
+                        </h3>
+                        <p id="statLeadingSubtitle" class="text-sm sm:text-base font-semibold ${isClosed ? 'text-amber-300/90' : 'text-cyan-300/90'}">
+                            ${leading && data.total_votes > 0
+                                ? `<span class="inline-flex items-center gap-2"><span class="text-white">${leading.votes_count} Suara</span><span class="px-2.5 py-0.5 rounded-full ${isClosed ? 'bg-amber-500/30 text-amber-200' : 'bg-cyan-500/30 text-cyan-200'} text-xs font-black">${leading.percentage}%</span></span>`
+                                : '<span class="text-slate-400">Menunggu suara masuk...</span>'}
+                        </p>
+                    `;
+                }
             }
 
-            const statLeadingCandidate = document.getElementById('statLeadingCandidate');
-            const statLeadingSubtitle = document.getElementById('statLeadingSubtitle');
-            if (statLeadingCandidate) {
-                statLeadingCandidate.textContent = leading ? leading.name : 'Belum Ada Suara';
-            }
-            if (statLeadingSubtitle) {
-                statLeadingSubtitle.textContent = leading && data.total_votes > 0
-                    ? `${leading.votes_count} Suara (${leading.percentage}%)`
-                    : 'Menunggu suara masuk';
-            }
-
-            // 3. Update Progress Bar Tiap Kandidat
+            // 2. Update Progress Bar Tiap Kandidat
             if (data.candidates) {
                 data.candidates.forEach(candidate => {
                     const pctEl = document.getElementById(`candidatePercentage-${candidate.id}`);
@@ -495,39 +464,6 @@
                 });
             }
 
-            // 4. Update Log Tabel Pemilih Terbaru
-            if (data.recent_voters && data.recent_voters.length > 0) {
-                const tbody = document.getElementById('recentVotersTableBody');
-                if (tbody) {
-                    tbody.innerHTML = '';
-                    data.recent_voters.forEach((item, index) => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'hover:bg-cyan-950/30 transition-colors';
-
-                        const typeBadge = item.type === 'GURU'
-                            ? '<span class="px-2 py-0.5 rounded text-[10px] font-black bg-purple-500/20 text-purple-300 border border-purple-500/40">GURU</span>'
-                            : '<span class="px-2 py-0.5 rounded text-[10px] font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">SISWA</span>';
-
-                        tr.innerHTML = `
-                            <td class="py-3 px-4 text-center text-slate-500 font-mono">${index + 1}</td>
-                            <td class="py-3 px-4 font-bold text-white">${escapeHtml(item.voter_name)}</td>
-                            <td class="py-3 px-4 font-mono text-cyan-300">${escapeHtml(item.identifier)}</td>
-                            <td class="py-3 px-4">${typeBadge}</td>
-                            <td class="py-3 px-4 text-slate-300">
-                                <div class="font-medium">${escapeHtml(item.voted_at)}</div>
-                                <div class="text-[10px] text-slate-500">${escapeHtml(item.voted_at_human)}</div>
-                            </td>
-                            <td class="py-3 px-4 text-center">
-                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-                                    <span>Tercatat Sah</span>
-                                </span>
-                            </td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                }
-            }
-
         } catch (error) {
             console.error('Polling error:', error);
         } finally {
@@ -535,19 +471,6 @@
                 setTimeout(() => refreshIcon.classList.remove('animate-spin'), 400);
             }
         }
-    }
-
-    // Escape string helper untuk mencegah XSS di rendering JS
-    function escapeHtml(text) {
-        if (!text) return '';
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#039;'
-        };
-        return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
     }
 
     // Salin Kode Room
