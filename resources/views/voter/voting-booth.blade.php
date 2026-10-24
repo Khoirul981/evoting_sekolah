@@ -120,6 +120,13 @@
                             <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
                                 {{ $candidate->name }}
                             </h3>
+
+                            <!-- Profil Singkat Kandidat -->
+                            @if($candidate->description)
+                                <p class="mt-2 text-xs text-slate-600 leading-relaxed line-clamp-2">
+                                    {{ $candidate->description }}
+                                </p>
+                            @endif
                         </div>
 
                         <!-- Visi & Misi atau Deskripsi Opsi -->
@@ -131,7 +138,7 @@
                                             Visi
                                         </h4>
                                         <p class="text-slate-600 leading-relaxed italic">
-                                            "{{ $candidate->vision }}"
+                                            "{!! nl2br(e($candidate->vision)) !!}"
                                         </p>
                                     </div>
                                 @endif
@@ -142,7 +149,7 @@
                                             Misi
                                         </h4>
                                         <p class="text-slate-600 leading-relaxed">
-                                            {{ $candidate->mission }}
+                                            {!! nl2br(e($candidate->mission)) !!}
                                         </p>
                                     </div>
                                 @endif
@@ -151,11 +158,10 @@
                             @if($candidate->description)
                                 <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/70 text-xs">
                                     <h4 class="font-bold text-slate-900 text-[11px] uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                                        <span class="w-1.5 h-1.5 rounded-full bg-slate-900"></span>
                                         Keterangan Opsi
                                     </h4>
                                     <p class="text-slate-600 leading-relaxed">
-                                        {{ $candidate->description }}
+                                        {!! nl2br(e($candidate->description)) !!}
                                     </p>
                                 </div>
                             @endif

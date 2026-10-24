@@ -43,12 +43,6 @@ class VoterAuthController extends Controller
             ])->onlyInput('identifier');
         }
 
-        if (!$voter->is_active) {
-            return back()->withErrors([
-                'identifier' => 'Hak akses pemilih Anda dinonaktifkan oleh administrator.',
-            ])->onlyInput('identifier');
-        }
-
         Auth::guard('voter')->login($voter);
         $request->session()->regenerate();
 

@@ -17,151 +17,75 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Super Admins
-        $superAdmin1 = User::create([
-            'name' => 'Super Admin Utama',
+        // 1. Super Admin (1 akun)
+        User::create([
+            'name' => 'Super Admin',
             'email' => 'admin@sekolah.sch.id',
             'password' => Hash::make('password'),
             'role' => 'SUPER_ADMIN',
         ]);
 
-        $superAdmin2 = User::create([
-            'name' => 'SYARIF KHOIRUL RIFA',
-            'email' => 'khoirul@gmail.com',
-            'password' => Hash::make('password'),
-            'role' => 'SUPER_ADMIN',
-        ]);
-
-        // 2. Petugas
-        $petugas1 = User::create([
+        // 2. Petugas (2 akun)
+        User::create([
             'name' => 'Petugas OSIS 1',
             'email' => 'petugas1@sekolah.sch.id',
             'password' => Hash::make('password'),
             'role' => 'PETUGAS',
         ]);
 
-        $petugas2 = User::create([
+        User::create([
             'name' => 'Petugas OSIS 2',
             'email' => 'petugas2@sekolah.sch.id',
             'password' => Hash::make('password'),
             'role' => 'PETUGAS',
         ]);
 
-        // 3. Voters (Siswa)
+        // 3. Voters - 30 Akun (20 Siswa + 10 Guru)
         $voters = [
-            ['identifier' => '1001', 'name' => 'Ahmad Rizky Pratama', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '1002', 'name' => 'Budi Santoso', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '1003', 'name' => 'Citra Lestari', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '1004', 'name' => 'Dewi Sartika', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '1005', 'name' => 'Eko Prasetyo', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '010109', 'name' => 'SYARIF KHOIRUL RIFA', 'type' => 'SISWA', 'is_active' => true],
-            ['identifier' => '2001', 'name' => 'Drs. Bambang Wijaya, M.Pd', 'type' => 'GURU', 'is_active' => true],
-            ['identifier' => '2002', 'name' => 'Siti Aminah, S.Pd', 'type' => 'GURU', 'is_active' => true],
-            ['identifier' => '2003', 'name' => 'Hendra Gunawan, S.Kom', 'type' => 'GURU', 'is_active' => true],
-            ['identifier' => '2004', 'name' => 'Sri Wahyuni, M.Si', 'type' => 'GURU', 'is_active' => true],
+            // SISWA (20 orang)
+            ['identifier' => '1001', 'name' => 'Ahmad Rizky Pratama', 'type' => 'SISWA'],
+            ['identifier' => '1002', 'name' => 'Budi Santoso', 'type' => 'SISWA'],
+            ['identifier' => '1003', 'name' => 'Citra Lestari', 'type' => 'SISWA'],
+            ['identifier' => '1004', 'name' => 'Dewi Sartika', 'type' => 'SISWA'],
+            ['identifier' => '1005', 'name' => 'Eko Prasetyo', 'type' => 'SISWA'],
+            ['identifier' => '1006', 'name' => 'Fitri Handayani', 'type' => 'SISWA'],
+            ['identifier' => '1007', 'name' => 'Galih Ramadhan', 'type' => 'SISWA'],
+            ['identifier' => '1008', 'name' => 'Hana Pertiwi', 'type' => 'SISWA'],
+            ['identifier' => '1009', 'name' => 'Irfan Maulana', 'type' => 'SISWA'],
+            ['identifier' => '1010', 'name' => 'Jasmine Putri', 'type' => 'SISWA'],
+            ['identifier' => '1011', 'name' => 'Kevin Adiputra', 'type' => 'SISWA'],
+            ['identifier' => '1012', 'name' => 'Lina Marlina', 'type' => 'SISWA'],
+            ['identifier' => '1013', 'name' => 'Muhammad Fauzi', 'type' => 'SISWA'],
+            ['identifier' => '1014', 'name' => 'Nabila Azzahra', 'type' => 'SISWA'],
+            ['identifier' => '1015', 'name' => 'Oscar Wijaya', 'type' => 'SISWA'],
+            ['identifier' => '1016', 'name' => 'Putri Wulandari', 'type' => 'SISWA'],
+            ['identifier' => '1017', 'name' => 'Qomar Hidayat', 'type' => 'SISWA'],
+            ['identifier' => '1018', 'name' => 'Rina Novita', 'type' => 'SISWA'],
+            ['identifier' => '1019', 'name' => 'Satria Nugraha', 'type' => 'SISWA'],
+            ['identifier' => '1020', 'name' => 'Tiara Kusuma', 'type' => 'SISWA'],
+
+            // GURU (10 orang)
+            ['identifier' => '2001', 'name' => 'Drs. Bambang Wijaya, M.Pd', 'type' => 'GURU'],
+            ['identifier' => '2002', 'name' => 'Siti Aminah, S.Pd', 'type' => 'GURU'],
+            ['identifier' => '2003', 'name' => 'Hendra Gunawan, S.Kom', 'type' => 'GURU'],
+            ['identifier' => '2004', 'name' => 'Sri Wahyuni, M.Si', 'type' => 'GURU'],
+            ['identifier' => '2005', 'name' => 'Dr. Agus Salim, M.Pd', 'type' => 'GURU'],
+            ['identifier' => '2006', 'name' => 'Nur Hidayah, S.Pd', 'type' => 'GURU'],
+            ['identifier' => '2007', 'name' => 'Bambang Sutrisno, S.S', 'type' => 'GURU'],
+            ['identifier' => '2008', 'name' => 'Rina Puspitasari, M.Pd', 'type' => 'GURU'],
+            ['identifier' => '2009', 'name' => 'Dedi Supriadi, S.Pd', 'type' => 'GURU'],
+            ['identifier' => '2010', 'name' => 'Yuni Kartika, S.Pd.I', 'type' => 'GURU'],
         ];
 
         foreach ($voters as $voterData) {
             Voter::create($voterData);
         }
 
-        // 4. Sample Event 1 (Kategori: KANDIDAT)
-        $event1 = Event::create([
-            'created_by' => $petugas1->id,
-            'title' => 'Pemilihan Ketua OSIS Periode 2026/2027',
-            'category' => 'KANDIDAT',
-            'room_code' => 'OSIS26',
-            'description' => 'Pemilihan Ketua dan Wakil Ketua OSIS SMA Negeri untuk masa bakti 2026/2027 secara jujur dan transparan.',
-            'status' => 'PUBLISHED',
-        ]);
-
-        Candidate::create([
-            'event_id' => $event1->id,
-            'candidate_number' => 1,
-            'name' => 'Muhammad Fatih & Nadia Putri',
-            'vision' => 'Mewujudkan OSIS yang aspiratif, berkarakter unggul, dan berdaya saing di era digital.',
-            'mission' => "1. Mengembangkan bakat siswa melalui kegiatan ekstrakurikuler modern.\n2. Meningkatkan transparansi program kerja OSIS berbasis teknologi digital.\n3. Menumbuhkan budaya peduli lingkungan dan empati sosial.",
-        ]);
-
-        Candidate::create([
-            'event_id' => $event1->id,
-            'candidate_number' => 2,
-            'name' => 'Rehan Pratama & Zahra Aulia',
-            'vision' => 'Menjadikan sekolah sebagai ruang kreasi, prestasi, dan kolaborasi yang inklusif.',
-            'mission' => "1. Menyelenggarakan festival seni dan sains tahunan berskala regional.\n2. Membangun platform aspirasi terbuka bagi seluruh siswa dan guru.\n3. Mengadakan program mentoring kepemimpinan berkala.",
-        ]);
-
-        // 5. Sample Event 2 (Kategori: OPSI)
-        $event2 = Event::create([
-            'created_by' => $petugas1->id,
-            'title' => 'Penentuan Destinasi Studi Tour Kelas XII',
-            'category' => 'OPSI',
-            'room_code' => 'TOUR26',
-            'description' => 'Musyawarah digital penentuan lokasi kegiatan studi tour siswa kelas XII tahun pelajaran 2026.',
-            'status' => 'PUBLISHED',
-        ]);
-
-        Candidate::create([
-            'event_id' => $event2->id,
-            'candidate_number' => 1,
-            'name' => 'Opsi A: Yogyakarta (Budaya & Edukasi)',
-            'description' => 'Kunjungan edukasi sejarah ke Candi Prambanan, Candi Borobudur, Keraton Yogyakarta, dan sentra kerajinan perak Kotagede.',
-        ]);
-
-        Candidate::create([
-            'event_id' => $event2->id,
-            'candidate_number' => 2,
-            'name' => 'Opsi B: Malang & Batu (Agrowisata & Science)',
-            'description' => 'Kunjungan sains ke Museum Angkut, Jatim Park 3, dan wisata edukasi perkebunan apel.',
-        ]);
-
-        Candidate::create([
-            'event_id' => $event2->id,
-            'candidate_number' => 3,
-            'name' => 'Opsi C: Bandung (Teknologi & Industri Kreatif)',
-            'description' => 'Kunjungan ke Museum Geologi, Saung Angklung Udjo, dan pusat industri kreatif tekstil Bandung.',
-        ]);
-
-        // 6. Audit Logs Awal (Hanya Aksi Terkait Event)
-        AuditLog::create([
-            'user_id' => $petugas1->id,
-            'user_name' => $petugas1->name,
-            'role' => $petugas1->role,
-            'action' => 'CREATE_EVENT',
-            'description' => "Membuat event baru '{$event1->title}' (Kode Room: {$event1->room_code})",
-            'ip_address' => '127.0.0.1',
-            'created_at' => now()->subMinutes(30),
-        ]);
-
-        AuditLog::create([
-            'user_id' => $petugas1->id,
-            'user_name' => $petugas1->name,
-            'role' => $petugas1->role,
-            'action' => 'CREATE_EVENT',
-            'description' => "Membuat event baru '{$event2->title}' (Kode Room: {$event2->room_code})",
-            'ip_address' => '127.0.0.1',
-            'created_at' => now()->subMinutes(20),
-        ]);
-
-        AuditLog::create([
-            'user_id' => $petugas1->id,
-            'user_name' => $petugas1->name,
-            'role' => $petugas1->role,
-            'action' => 'CHANGE_EVENT_STATUS',
-            'description' => "Mengubah status event '{$event1->title}' dari DRAFT menjadi PUBLISHED",
-            'ip_address' => '127.0.0.1',
-            'created_at' => now()->subMinutes(10),
-        ]);
-
-        AuditLog::create([
-            'user_id' => $petugas1->id,
-            'user_name' => $petugas1->name,
-            'role' => $petugas1->role,
-            'action' => 'UPDATE_EVENT',
-            'description' => "Memperbarui deskripsi dan rincian opsi pada event '{$event2->title}'",
-            'ip_address' => '127.0.0.1',
-            'created_at' => now()->subMinutes(5),
-        ]);
+        echo "\n✅ Seeder berhasil!\n";
+        echo "📊 Data yang dibuat:\n";
+        echo "   - 1 Super Admin (admin@sekolah.sch.id / password)\n";
+        echo "   - 2 Petugas (petugas1@sekolah.sch.id, petugas2@sekolah.sch.id / password)\n";
+        echo "   - 30 Voters (20 Siswa + 10 Guru)\n\n";
     }
 }
 

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('identifier', 50)->unique(); // NIS / NIP
             $table->string('name');
             $table->enum('type', ['SISWA', 'GURU'])->default('SISWA');
-            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

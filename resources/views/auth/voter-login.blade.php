@@ -8,10 +8,8 @@
 @section('footer_color', 'text-slate-500')
 
 @section('header_badge')
-<div class="w-12 h-12 rounded-xl bg-white border border-slate-300 flex items-center justify-center text-slate-900 shadow-sm">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-    </svg>
+<div class="w-20 h-20 flex items-center justify-center mb-0">
+    <img src="{{ asset('images/logo_votingyuk.png') }}" alt="Logo VOTINGYUK" class="w-full h-full object-contain drop-shadow-sm">
 </div>
 @endsection
 
@@ -80,7 +78,7 @@
                 type="submit"
                 class="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 active:bg-black text-white font-semibold rounded-xl text-base shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-                <span>Masuk ke Bilik Suara</span>
+                <span>Login</span>
             </button>
         </form>
 

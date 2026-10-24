@@ -19,15 +19,21 @@ class EventController extends Controller
      */
     public function index(Request $request): View
     {
-        // 1. Cek & sinkronisasi otomatis status jadwal event yang aktif
-        $allEvents = Event::whereNotNull('start_time')->orWhereNotNull('end_time')->get();
+        $currentPetugasId = Auth::id();
+
+        // 1. Cek & sinkronisasi otomatis status jadwal event yang aktif (hanya event milik petugas ini)
+        $allEvents = Event::where('created_by', $currentPetugasId)
+            ->where(function ($q) {
+                $q->whereNotNull('start_time')->orWhereNotNull('end_time');
+            })->get();
         foreach ($allEvents as $ev) {
             $ev->checkAndUpdateAutoStatus();
         }
 
-        // 2. Query data dengan eager loading & filter
+        // 2. Query data dengan eager loading & filter (hanya event milik petugas ini)
         $query = Event::with(['creator'])
-            ->withCount(['candidates', 'participations', 'votes']);
+            ->withCount(['candidates', 'participations', 'votes'])
+            ->where('created_by', $currentPetugasId);
 
         // Filter Pencarian (Judul / Kode Ruang)
         if ($request->filled('search')) {
@@ -51,12 +57,12 @@ class EventController extends Controller
 
         $events = $query->latest('id')->paginate(9)->withQueryString();
 
-        // 3. Ringkasan Statistik Metrik Event
+        // 3. Ringkasan Statistik Metrik Event (hanya event milik petugas ini)
         $metrics = [
-            'total' => Event::count(),
-            'published' => Event::where('status', 'PUBLISHED')->count(),
-            'draft' => Event::where('status', 'DRAFT')->count(),
-            'closed' => Event::where('status', 'CLOSED')->count(),
+            'total' => Event::where('created_by', $currentPetugasId)->count(),
+            'published' => Event::where('created_by', $currentPetugasId)->where('status', 'PUBLISHED')->count(),
+            'draft' => Event::where('created_by', $currentPetugasId)->where('status', 'DRAFT')->count(),
+            'closed' => Event::where('created_by', $currentPetugasId)->where('status', 'CLOSED')->count(),
         ];
 
         return view('petugas.events.index', compact('events', 'metrics'));

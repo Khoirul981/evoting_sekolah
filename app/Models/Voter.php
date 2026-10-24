@@ -15,15 +15,7 @@ class Voter extends Authenticatable
         'identifier',
         'name',
         'type',
-        'is_active',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'is_active' => 'boolean',
-        ];
-    }
 
     public function participations(): HasMany
     {

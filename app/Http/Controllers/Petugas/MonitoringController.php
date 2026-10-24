@@ -21,9 +21,14 @@ class MonitoringController extends Controller
      */
     public function show(Event $event): View
     {
+        // Authorization: Pastikan petugas hanya bisa akses event miliknya sendiri
+        if ($event->created_by !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses ke event ini.');
+        }
+
         $event->checkAndUpdateAutoStatus();
 
-        $totalVoters = Voter::where('is_active', true)->count();
+        $totalVoters = Voter::count();
         $totalVotes = $event->votes()->count();
         $participationRate = $totalVoters > 0 ? round(($totalVotes / $totalVoters) * 100, 1) : 0;
 
@@ -67,7 +72,7 @@ class MonitoringController extends Controller
     {
         $event->checkAndUpdateAutoStatus();
 
-        $totalVoters = Voter::where('is_active', true)->count();
+        $totalVoters = Voter::count();
         $totalVotes = $event->votes()->count();
         $participationRate = $totalVoters > 0 ? round(($totalVotes / $totalVoters) * 100, 1) : 0;
 
@@ -131,7 +136,7 @@ class MonitoringController extends Controller
             "Mengekspor rekapitulasi perolehan suara event '{$event->title}' (Kode Ruang: {$event->room_code})."
         );
 
-        $totalVoters = Voter::where('is_active', true)->count();
+        $totalVoters = Voter::count();
         $totalVotes = $event->votes()->count();
         $participationRate = $totalVoters > 0 ? round(($totalVotes / $totalVoters) * 100, 2) : 0;
 

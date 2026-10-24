@@ -10,15 +10,39 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class VoterFactory extends Factory
 {
-    protected $model = Voter::class;
-
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'identifier' => (string) fake()->unique()->numerify('#####'),
+            'identifier' => fake()->unique()->numerify('######'),
             'name' => fake()->name(),
             'type' => fake()->randomElement(['SISWA', 'GURU']),
-            'is_active' => true,
         ];
     }
+
+    /**
+     * State untuk Siswa
+     */
+    public function siswa(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => 'SISWA',
+        ]);
+    }
+
+    /**
+     * State untuk Guru
+     */
+    public function guru(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'type' => 'GURU',
+        ]);
+    }
+
+
 }

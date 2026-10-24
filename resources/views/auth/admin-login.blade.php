@@ -8,10 +8,8 @@
 @section('footer_color', 'text-rose-400/60')
 
 @section('header_badge')
-<div class="w-12 h-12 rounded-xl bg-[#800020] border border-rose-500/30 flex items-center justify-center text-white shadow-lg shadow-rose-950/60">
-    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-    </svg>
+<div class="w-20 h-20 flex items-center justify-center mb-0">
+    <img src="{{ asset('images/logo_votingyuk.png') }}" alt="Logo VOTINGYUK" class="w-full h-full object-contain drop-shadow-md">
 </div>
 @endsection
 
@@ -116,6 +114,21 @@
                 @error('password')
                     <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                 @enderror
+            </div>
+
+            <!-- Checkbox Remember Me -->
+            <div class="flex items-center">
+                <input
+                    type="checkbox"
+                    id="remember"
+                    name="remember"
+                    value="1"
+                    {{ old('remember') ? 'checked' : '' }}
+                    class="w-4 h-4 rounded border-rose-900/60 bg-[#100104] text-rose-600 focus:ring-rose-500 focus:ring-offset-0 focus:ring-2 cursor-pointer transition-colors"
+                >
+                <label for="remember" class="ml-2 text-sm text-rose-200 cursor-pointer select-none">
+                    Ingat saya di perangkat ini
+                </label>
             </div>
 
             <button

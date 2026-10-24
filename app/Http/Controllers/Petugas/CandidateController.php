@@ -19,6 +19,11 @@ class CandidateController extends Controller
      */
     public function index(Event $event): View
     {
+        // Authorization: Pastikan petugas hanya bisa akses event miliknya sendiri
+        if ($event->created_by !== auth()->id()) {
+            abort(403, 'Anda tidak memiliki akses ke event ini.');
+        }
+
         $event->load(['candidates' => function ($q) {
             $q->orderBy('candidate_number', 'asc');
         }]);

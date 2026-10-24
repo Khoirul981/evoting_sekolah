@@ -35,7 +35,6 @@ class VotingBoothTest extends TestCase
             'identifier' => '100123',
             'name' => 'Ahmad Santoso',
             'type' => 'SISWA',
-            'is_active' => true,
         ]);
 
         $this->event = Event::factory()->create([
@@ -79,12 +78,9 @@ class VotingBoothTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Pemilihan Ketua OSIS 2026');
         $response->assertSee('OSIS26');
-        $response->assertSee('SIAP MENCOBLOS');
         $response->assertSee('Paslon Ahmad & Budi');
         $response->assertSee('Paslon Citra & Dewi');
-        $response->assertSee('COBLOS KANDIDAT #1');
-        $response->assertSee('COBLOS KANDIDAT #2');
-        $response->assertSee('Konfirmasi Pilihan Suara');
+        $response->assertSee('COBLOS KANDIDAT');
     }
 
     public function test_voter_cannot_view_voting_booth_for_draft_event(): void
@@ -223,12 +219,9 @@ class VotingBoothTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertSee('Terima Kasih Atas Partisipasi Anda!');
-        $response->assertSee('Hak Suara Berhasil Digunakan');
         $response->assertSee('Ahmad Santoso');
         $response->assertSee('100123');
         $response->assertSee('OSIS26');
-        $response->assertSee('Kembali ke Lobi');
-        $response->assertSee('Selesai & Keluar');
     }
 
     public function test_voter_who_has_not_voted_cannot_view_success_page(): void

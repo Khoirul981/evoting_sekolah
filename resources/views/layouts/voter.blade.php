@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Bilik Suara Digital') - {{ config('app.name', 'VOTINGYUK') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo_votingyuk.png') }}">
     <!-- Google Font: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,11 +19,9 @@
     <header class="bg-white border-b border-slate-200/90 sticky top-0 z-40 shadow-xs">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
             <!-- Brand Logo & Identity -->
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-sm shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                    </svg>
+            <div class="flex items-center gap-2.5">
+                <div class="w-10 h-10 flex items-center justify-center shrink-0">
+                    <img src="{{ asset('images/logo_votingyuk.png') }}" alt="Logo VOTINGYUK" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <a href="{{ route('voter.dashboard') }}" class="text-base font-bold tracking-tight text-slate-900 hover:text-slate-700 transition-colors flex items-center gap-2">

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Panel Petugas') - {{ config('app.name', 'VOTINGYUK') }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo_votingyuk.png') }}">
     <!-- Google Font: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,10 +26,8 @@
             <!-- Header Logo & Role Badge -->
             <div class="p-5 border-b border-cyan-950/60 flex items-center justify-between shrink-0">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-[#042438] border border-cyan-400/60 flex items-center justify-center text-cyan-400 shadow-lg shadow-cyan-950/60 shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-                        </svg>
+                    <div class="w-11 h-11 flex items-center justify-center shrink-0">
+                        <img src="{{ asset('images/logo_votingyuk.png') }}" alt="Logo VOTINGYUK" class="w-full h-full object-contain drop-shadow-sm">
                     </div>
                     <div>
                         <h1 class="text-base font-extrabold tracking-tight text-white leading-tight">
@@ -61,7 +60,7 @@
                     <svg class="w-4 h-4 {{ (request()->routeIs('petugas.events.*') || request()->routeIs('petugas.candidates.*')) ? 'text-white' : 'text-cyan-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
-                    <span>Kelola Event & Voting</span>
+                    <span>Kelola Event Voting</span>
                 </a>
             </nav>
         </div>

@@ -235,29 +235,11 @@
                                 <div class="text-[10px] text-slate-400 font-mono mt-0.5">{{ $log->role }}</div>
                             </td>
 
-                            <!-- Kolom Aksi (Badge Berwarna) -->
+                            <!-- Kolom Aksi (Badge Abu-abu Konsisten) -->
                             <td class="py-3.5 px-4 whitespace-nowrap">
-                                @if($log->action === 'CHANGE_EVENT_STATUS')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-amber-950/80 text-amber-400 border border-amber-800/60">
-                                        CHANGE_EVENT_STATUS
-                                    </span>
-                                @elseif($log->action === 'CREATE_EVENT')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-emerald-950/80 text-emerald-400 border border-emerald-800/60">
-                                        CREATE_EVENT
-                                    </span>
-                                @elseif($log->action === 'UPDATE_EVENT')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-sky-950/80 text-sky-400 border border-sky-800/60">
-                                        UPDATE_EVENT
-                                    </span>
-                                @elseif($log->action === 'DELETE_EVENT')
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-rose-950/80 text-rose-400 border border-rose-800/60">
-                                        DELETE_EVENT
-                                    </span>
-                                @else
-                                    <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
-                                        {{ $log->action }}
-                                    </span>
-                                @endif
+                                <span class="inline-block px-2.5 py-1 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700">
+                                    {{ $log->action }}
+                                </span>
                             </td>
 
                             <!-- Kolom Deskripsi Aktivitas -->

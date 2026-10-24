@@ -62,7 +62,7 @@
                     class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                 >
                     <option value="">Semua Status</option>
-                    <option value="DRAFT" {{ request('status') === 'DRAFT' ? 'selected' : '' }}>Draf (DRAFT)</option>
+                    <option value="DRAFT" {{ request('status') === 'DRAFT' ? 'selected' : '' }}>Draft (DRAFT)</option>
                     <option value="PUBLISHED" {{ request('status') === 'PUBLISHED' ? 'selected' : '' }}>Sedang Aktif (PUBLISHED)</option>
                     <option value="CLOSED" {{ request('status') === 'CLOSED' ? 'selected' : '' }}>Selesai (CLOSED)</option>
                 </select>
@@ -133,7 +133,7 @@
                                 </span>
                             @elseif($event->status === 'DRAFT')
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/40">
-                                    <span>Draf / Menunggu</span>
+                                    <span>Draft / Menunggu</span>
                                 </span>
                             @else
                                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-700/60 text-slate-300 border border-slate-600/50">
@@ -175,7 +175,7 @@
                             <div class="p-2 rounded-lg bg-[#050d1a] border border-cyan-950/60">
                                 <span class="text-[10px] text-slate-500 block">Kandidat / Opsi</span>
                                 <span class="font-bold text-cyan-300">
-                                    {{ $event->candidates_count }} {{ $event->category === 'KANDIDAT' ? 'Kandidat' : 'Pilihan' }}
+                                    {{ $event->candidates_count }} {{ $event->category === 'KANDIDAT' ? 'Kandidat' : 'Opsi' }}
                                 </span>
                             </div>
                             <div class="p-2 rounded-lg bg-[#050d1a] border border-cyan-950/60">
@@ -317,35 +317,17 @@
              STATE KOSONG (EMPTY STATE)
              ========================================================================= -->
         <div class="p-12 text-center bg-[#071226] rounded-2xl border border-cyan-950/80 shadow-md">
-            <div class="w-16 h-16 rounded-2xl bg-cyan-600/15 border border-cyan-500/30 text-cyan-400 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-            </div>
             <h3 class="text-base sm:text-lg font-bold text-white">Belum Ada Event Pemilihan</h3>
             <p class="text-xs sm:text-sm text-slate-400 max-w-md mx-auto mt-1">
                 @if(request()->hasAny(['search', 'status', 'category']))
-                    Tidak ada event yang cocok dengan kriteria filter pencarian Anda. Silakan reset filter.
+                    Tidak ada event yang cocok dengan kriteria filter pencarian Anda.
                 @else
                     Mulai buat agenda voting baru seperti Pemilihan Ketua OSIS, Ketua MPK, atau Polling Kegiatan Sekolah.
                 @endif
             </p>
             <div class="mt-5">
                 @if(request()->hasAny(['search', 'status', 'category']))
-                    <a href="{{ route('petugas.events.index') }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition-all">
-                        Reset Filter Pencarian
-                    </a>
                 @else
-                    <button
-                        type="button"
-                        onclick="openCreateModal()"
-                        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold shadow-lg border border-cyan-400/40 transition-all cursor-pointer"
-                    >
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                        </svg>
-                        <span>Buat Event Pertama Sekarang</span>
-                    </button>
                 @endif
             </div>
         </div>
@@ -432,10 +414,11 @@
                     required
                     class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                 >
-                    <option value="DRAFT">Draf (Disimpan dulu, belum dapat dipilih)</option>
-                    <option value="PUBLISHED">Langsung Aktifkan (Pemilih bisa masuk & voting)</option>
-                    <option value="CLOSED">Selesai / Ditutup</option>
+                    <option value="DRAFT" selected>Draft (Event baru wajib dimulai sebagai Draft)</option>
+                    <option value="PUBLISHED" disabled>Aktif / Dibuka (Tidak tersedia untuk event baru)</option>
+                    <option value="CLOSED" disabled>Selesai / Ditutup (Tidak tersedia untuk event baru)</option>
                 </select>
+                <p class="text-[10px] text-slate-400 mt-1">Event baru harus DRAFT terlebih dahulu. Aktifkan setelah kandidat/opsi ditambahkan.</p>
             </div>
 
             <!-- Waktu Mulai & Waktu Selesai (Opsional) -->
@@ -447,7 +430,7 @@
                     <input
                         type="datetime-local"
                         name="start_time"
-                        style="color-scheme: dark;"
+                        style="color-scheme: light;"
                         class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                     >
                     <p class="text-[10px] text-slate-500 mt-1">Kosongkan jika ingin dibuka secara manual.</p>
@@ -460,7 +443,7 @@
                     <input
                         type="datetime-local"
                         name="end_time"
-                        style="color-scheme: dark;"
+                        style="color-scheme: light;"
                         class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                     >
                     <p class="text-[10px] text-slate-500 mt-1">Kosongkan jika ingin ditutup secara manual.</p>
@@ -582,7 +565,7 @@
                     required
                     class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                 >
-                    <option value="DRAFT">Draf (DRAFT)</option>
+                    <option value="DRAFT">Draft (DRAFT)</option>
                     <option value="PUBLISHED">Sedang Aktif (PUBLISHED)</option>
                     <option value="CLOSED">Selesai (CLOSED)</option>
                 </select>
@@ -598,7 +581,7 @@
                         type="datetime-local"
                         id="edit_start_time"
                         name="start_time"
-                        style="color-scheme: dark;"
+                        style="color-scheme: light;"
                         class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                     >
                 </div>
@@ -611,7 +594,7 @@
                         type="datetime-local"
                         id="edit_end_time"
                         name="end_time"
-                        style="color-scheme: dark;"
+                        style="color-scheme: light;"
                         class="w-full px-3.5 py-2.5 bg-[#050d1a] border border-cyan-950 rounded-xl text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-cyan-400"
                     >
                 </div>
@@ -672,7 +655,7 @@
                 Apakah Anda yakin ingin menghapus event <strong id="delete_event_title" class="text-white"></strong> (Kode: <span id="delete_event_code" class="font-mono text-cyan-400"></span>)?
             </p>
             <div class="p-3 bg-rose-950/40 border border-rose-900/40 rounded-xl text-[11px] text-rose-300/90 leading-relaxed">
-                ⚠️ Seluruh data terkait seperti daftar kandidat/opsi dan riwayat perolehan suara pada event ini juga akan ikut terhapus.
+                Seluruh data terkait seperti daftar kandidat/opsi dan riwayat perolehan suara pada event ini juga akan ikut terhapus.
             </div>
         </div>
 

@@ -136,9 +136,9 @@
                                                 {{ strtoupper(substr($admin->name, 0, 1)) }}
                                             </div>
                                             <div>
-                                                <span>{{ $admin->name }}</span>
+                                                <div>{{ $admin->name }}</div>
                                                 @if(Auth::id() === $admin->id)
-                                                    <span class="ml-1.5 px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700/60">
+                                                    <span class="inline-block mt-1 px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-700/60">
                                                         Anda
                                                     </span>
                                                 @endif
@@ -480,7 +480,6 @@
             </div>
         </div>
     @endif
-
 </div>
 
 <!-- =========================================================================
@@ -690,11 +689,6 @@
      ========================================================================= -->
 <div id="modalDeleteUser" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
     <div class="w-full max-w-sm rounded-2xl bg-[#0c1424] border border-rose-900/60 p-6 shadow-2xl space-y-4">
-        <div class="w-10 h-10 rounded-xl bg-rose-950/80 border border-rose-600/40 text-rose-400 flex items-center justify-center mx-auto">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-            </svg>
-        </div>
 
         <div class="text-center space-y-1">
             <h3 class="text-sm font-bold text-white">Konfirmasi Hapus Akun</h3>

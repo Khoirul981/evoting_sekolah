@@ -125,6 +125,13 @@
         <!-- Pilihan Unggul / Pemenang (dinamis berdasarkan status event) -->
         <div class="p-6 rounded-2xl bg-[#071226] border-2 shadow-lg relative overflow-hidden transition-all duration-300 {{ $isTied ? 'border-rose-500 hover:border-rose-400' : ($event->status === 'CLOSED' ? 'border-amber-500 hover:border-amber-400' : 'border-cyan-500 hover:border-cyan-400') }}">
             <div class="text-center">
+                <!-- Badge Label "Hasil Sementara" atau "Hasil Akhir" -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full {{ $event->status === 'CLOSED' ? 'bg-amber-500/20 border border-amber-500/40' : 'bg-cyan-500/20 border border-cyan-500/40' }} mb-3">
+                    <span class="text-xs font-bold {{ $event->status === 'CLOSED' ? 'text-amber-300' : 'text-cyan-300' }} uppercase tracking-wide">
+                        {{ $event->status === 'CLOSED' ? 'Pemenang / Hasil Akhir' : 'Pilihan Yang Sedang Unggul (Hasil Sementara)' }}
+                    </span>
+                </div>
+
                 @if($isTied)
                     <!-- TAMPILAN SERI -->
                     <div class="space-y-3">
@@ -182,9 +189,6 @@
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-cyan-950/80 pb-4">
             <div>
                 <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-                    <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                    </svg>
                     <span>Perolehan Suara {{ $event->category === 'KANDIDAT' ? 'Kandidat / Paslon' : 'Opsi Pemilihan' }}</span>
                 </h2>
                 <p class="text-xs text-slate-400 mt-0.5">
@@ -312,7 +316,7 @@
             <table class="w-full text-left text-xs text-slate-300">
                 <thead class="bg-[#050d1a] text-cyan-400 font-bold border-b border-cyan-950">
                     <tr>
-                        <th class="py-3 px-4 w-12 text-center">#</th>
+                        <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4">Nama Pemilih</th>
                         <th class="py-3 px-4">NIS / NIP</th>
                         <th class="py-3 px-4">Tipe Pemilih</th>
@@ -334,11 +338,11 @@
                             </td>
                             <td class="py-3 px-4">
                                 @if(($part->voter->type ?? 'SISWA') === 'GURU')
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-black bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-black bg-amber-950/80 text-amber-300 border border-amber-700/60">
                                         GURU
                                     </span>
                                 @else
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-black bg-sky-950/80 text-sky-300 border border-sky-700/60">
                                         SISWA
                                     </span>
                                 @endif

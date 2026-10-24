@@ -216,7 +216,6 @@ class UserController extends Controller
             'identifier' => trim($validated['identifier']),
             'name' => trim($validated['name']),
             'type' => $validated['type'],
-            'is_active' => true,
         ]);
 
         // Audit Log
