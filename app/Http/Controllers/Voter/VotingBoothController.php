@@ -92,10 +92,18 @@ class VotingBoothController extends Controller
 
         $request->validate([
             'candidate_id' => ['required', 'integer', 'exists:candidates,id'],
+            'room_code' => ['required', 'string'],
         ], [
             'candidate_id.required' => 'Silakan tentukan kandidat pilihan Anda terlebih dahulu.',
             'candidate_id.exists' => 'Kandidat yang dipilih tidak valid dalam sistem.',
+            'room_code.required' => 'Silakan masukkan kode ruangan (room code) resmi event ini untuk mengirim suara.',
         ]);
+
+        // Verifikasi kesesuaian kode ruangan yang diinput pemilih dengan event ini
+        $inputRoomCode = strtoupper(trim((string) $request->room_code));
+        if ($inputRoomCode !== strtoupper(trim($event->room_code))) {
+            return back()->withInput()->with('error', 'Kode ruangan yang Anda masukkan tidak sesuai dengan event pemilihan ini.');
+        }
 
         $event->checkAndUpdateAutoStatus();
 
@@ -170,8 +178,7 @@ class VotingBoothController extends Controller
             return back()->with('error', 'Gagal memproses surat suara. Silakan coba kembali atau hubungi panitia.');
         }
 
-        return redirect()->route('voter.events.success', $event->room_code)
-            ->with('success', 'Terima kasih! Hak suara Anda telah berhasil dicatat secara sah dan rahasia.');
+        return redirect()->route('voter.events.success', $event->room_code);
     }
 
     /**

@@ -61,7 +61,7 @@
                         required
                         autofocus
                         autocomplete="off"
-                        class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border-2 @error('identifier') border-rose-500 @else border-slate-300 hover:border-slate-400 @enderror rounded-xl text-slate-900 placeholder:text-slate-400 placeholder:text-sm text-base sm:text-lg font-mono font-semibold tracking-wider focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 transition-all shadow-inner"
+                        class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border-2 @error('identifier') border-rose-500 @else border-slate-300 @enderror rounded-xl text-slate-900 placeholder:text-slate-400 placeholder:text-sm text-base sm:text-lg font-mono font-semibold tracking-wider focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 transition-all shadow-inner"
                     >
                 </div>
                 @error('identifier')

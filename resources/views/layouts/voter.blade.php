@@ -55,16 +55,29 @@
     <!-- =========================================================================
          KONTEN UTAMA
          ========================================================================= -->
-    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col justify-center items-center">
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 flex flex-col justify-start">
         <!-- Flash Alert Error -->
         @if(session('error'))
-            <div class="w-full max-w-lg mb-6 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-start gap-3 shadow-xs">
+            <div class="w-full mb-6 p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-800 text-sm flex items-start gap-3 shadow-xs">
                 <svg class="w-5 h-5 text-rose-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <div class="flex-1">
                     <p class="font-bold">Pemberitahuan</p>
                     <p class="text-xs text-rose-700 mt-0.5">{{ session('error') }}</p>
+                </div>
+            </div>
+        @endif
+
+        <!-- Flash Alert Success -->
+        @if(session('success') && !request()->routeIs('voter.events.success'))
+            <div class="w-full mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm flex items-start gap-3 shadow-xs">
+                <svg class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div class="flex-1">
+                    <p class="font-bold">Berhasil</p>
+                    <p class="text-xs text-emerald-700 mt-0.5">{{ session('success') }}</p>
                 </div>
             </div>
         @endif

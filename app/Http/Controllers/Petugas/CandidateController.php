@@ -8,6 +8,7 @@ use App\Models\Candidate;
 use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -20,7 +21,7 @@ class CandidateController extends Controller
     public function index(Event $event): View
     {
         // Authorization: Pastikan petugas hanya bisa akses event miliknya sendiri
-        if ($event->created_by !== auth()->id()) {
+        if ($event->created_by !== Auth::id()) {
             abort(403, 'Anda tidak memiliki akses ke event ini.');
         }
 

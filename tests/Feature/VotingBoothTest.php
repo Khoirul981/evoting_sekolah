@@ -141,10 +141,10 @@ class VotingBoothTest extends TestCase
         $response = $this->actingAs($this->voter, 'voter')
             ->post(route('voter.events.vote.post', $this->event->room_code), [
                 'candidate_id' => $this->candidate1->id,
+                'room_code' => $this->event->room_code,
             ]);
 
         $response->assertRedirect(route('voter.events.success', $this->event->room_code));
-        $response->assertSessionHas('success');
 
         // 1. Suara tercatat di tabel votes
         $this->assertEquals(1, Vote::where('event_id', $this->event->id)->where('candidate_id', $this->candidate1->id)->count());
@@ -161,12 +161,25 @@ class VotingBoothTest extends TestCase
         $this->assertTrue(AuditLog::where('action', 'vote.cast')->exists());
     }
 
+    public function test_voter_cannot_vote_with_invalid_room_code(): void
+    {
+        $response = $this->actingAs($this->voter, 'voter')
+            ->post(route('voter.events.vote.post', $this->event->room_code), [
+                'candidate_id' => $this->candidate1->id,
+                'room_code' => 'WRONGCODE',
+            ]);
+
+        $response->assertSessionHas('error', 'Kode ruangan yang Anda masukkan tidak sesuai dengan event pemilihan ini.');
+        $this->assertEquals(0, Vote::count());
+    }
+
     public function test_voter_cannot_vote_twice_on_same_event(): void
     {
         // Beri suara pertama kali
         $this->actingAs($this->voter, 'voter')
             ->post(route('voter.events.vote.post', $this->event->room_code), [
                 'candidate_id' => $this->candidate1->id,
+                'room_code' => $this->event->room_code,
             ]);
 
         $this->assertEquals(1, Vote::count());
@@ -175,6 +188,7 @@ class VotingBoothTest extends TestCase
         $response = $this->actingAs($this->voter, 'voter')
             ->post(route('voter.events.vote.post', $this->event->room_code), [
                 'candidate_id' => $this->candidate2->id,
+                'room_code' => $this->event->room_code,
             ]);
 
         $response->assertRedirect(route('voter.events.success', $this->event->room_code));
@@ -200,6 +214,7 @@ class VotingBoothTest extends TestCase
         $response = $this->actingAs($this->voter, 'voter')
             ->post(route('voter.events.vote.post', $this->event->room_code), [
                 'candidate_id' => $otherCandidate->id,
+                'room_code' => $this->event->room_code,
             ]);
 
         $response->assertSessionHas('error');
@@ -230,5 +245,197 @@ class VotingBoothTest extends TestCase
             ->get(route('voter.events.success', $this->event->room_code));
 
         $response->assertRedirect(route('voter.events.vote', $this->event->room_code));
+    }
+
+    public function test_voter_dashboard_shows_all_published_ongoing_events_from_all_petugas(): void
+    {
+        $petugas2 = User::factory()->create([
+            'name' => 'Siti Aminah Petugas MPK',
+            'role' => 'PETUGAS',
+        ]);
+
+        $event2 = Event::factory()->create([
+            'created_by' => $petugas2->id,
+            'title' => 'Pemilihan Ketua MPK 2026',
+            'category' => 'KANDIDAT',
+            'room_code' => 'MPK26',
+            'status' => 'PUBLISHED',
+            'start_time' => Carbon::now()->subHour(),
+            'end_time' => Carbon::now()->addHours(3),
+        ]);
+        Candidate::factory()->count(2)->create(['event_id' => $event2->id]);
+
+        $response = $this->actingAs($this->voter, 'voter')
+            ->get(route('voter.dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Pemilihan Ketua OSIS 2026');
+        $response->assertSee('Pemilihan Ketua MPK 2026');
+        $response->assertSee('Siti Aminah Petugas MPK');
+        $response->assertSee('Daftar Event Pemilihan Sedang Berlangsung');
+        $response->assertSee('Sedang Berlangsung');
+        $response->assertSee('Detail Event');
+    }
+
+    public function test_voter_dashboard_does_not_show_draft_closed_or_future_events(): void
+    {
+        $draftEvent = Event::factory()->create([
+            'created_by' => $this->petugas->id,
+            'title' => 'Event Rahasia DRAFT',
+            'room_code' => 'DRAFT99',
+            'status' => 'DRAFT',
+            'start_time' => null,
+            'end_time' => null,
+        ]);
+
+        $closedEvent = Event::factory()->create([
+            'created_by' => $this->petugas->id,
+            'title' => 'Event Lampau CLOSED',
+            'room_code' => 'CLOSED99',
+            'status' => 'CLOSED',
+        ]);
+
+        $futureEvent = Event::factory()->create([
+            'created_by' => $this->petugas->id,
+            'title' => 'Event Masa Depan FUTURE',
+            'room_code' => 'FUTUR99',
+            'status' => 'PUBLISHED',
+            'start_time' => Carbon::now()->addDays(2),
+            'end_time' => Carbon::now()->addDays(3),
+        ]);
+
+        $response = $this->actingAs($this->voter, 'voter')
+            ->get(route('voter.dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertDontSee('Event Rahasia DRAFT');
+        $response->assertDontSee('Event Lampau CLOSED');
+        $response->assertDontSee('Event Masa Depan FUTURE');
+    }
+
+    public function test_voter_can_join_event_with_valid_event_id_and_matching_room_code(): void
+    {
+        $response = $this->actingAs($this->voter, 'voter')
+            ->post(route('voter.join.post'), [
+                'event_id' => $this->event->id,
+                'room_code' => 'OSIS26',
+            ]);
+
+        $response->assertRedirect(route('voter.events.vote', 'OSIS26'));
+    }
+
+    public function test_voter_cannot_join_event_with_mismatched_room_code_for_that_event(): void
+    {
+        $response = $this->actingAs($this->voter, 'voter')
+            ->from(route('voter.dashboard'))
+            ->post(route('voter.join.post'), [
+                'event_id' => $this->event->id,
+                'room_code' => 'KODESALAH',
+            ]);
+
+        $response->assertRedirect(route('voter.dashboard'));
+        $response->assertSessionHasErrors(['room_code_' . $this->event->id, 'room_code']);
+        $response->assertSessionHas('error');
+    }
+
+    public function test_voter_dashboard_shows_already_voted_badge_and_link(): void
+    {
+        EventParticipation::create([
+            'event_id' => $this->event->id,
+            'voter_id' => $this->voter->id,
+            'voted_at' => Carbon::now(),
+        ]);
+
+        $response = $this->actingAs($this->voter, 'voter')
+            ->get(route('voter.dashboard'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Sudah Memilih');
+        $response->assertSee('Hak Suara Telah Digunakan');
+        $response->assertSee(route('voter.events.success', $this->event->room_code));
+        $response->assertSee(route('voter.events.monitoring', $this->event->room_code));
+        $response->assertSee('Live Perolehan Suara');
+    }
+
+    public function test_voter_who_has_voted_can_view_event_monitoring(): void
+    {
+        Vote::create([
+            'event_id' => $this->event->id,
+            'candidate_id' => $this->candidate1->id,
+        ]);
+
+        EventParticipation::create([
+            'event_id' => $this->event->id,
+            'voter_id' => $this->voter->id,
+            'voted_at' => Carbon::now(),
+        ]);
+
+        $response = $this->actingAs($this->voter, 'voter')
+            ->get(route('voter.events.monitoring', $this->event->room_code));
+
+        $response->assertStatus(200);
+        $response->assertSee('Live Perolehan Suara');
+        $response->assertSee('Pemilihan Ketua OSIS 2026');
+        $response->assertSee('Paslon Ahmad & Budi');
+        $response->assertSee('Paslon Citra & Dewi');
+        $response->assertSee('Total Suara Masuk');
+    }
+
+    public function test_voter_who_has_not_voted_can_view_event_monitoring(): void
+    {
+        $response = $this->actingAs($this->voter, 'voter')
+            ->get(route('voter.events.monitoring', $this->event->room_code));
+
+        $response->assertStatus(200);
+        $response->assertSee('Live Perolehan Suara');
+        $response->assertSee('BELUM MEMILIH');
+        $response->assertSee('Masuk Bilik Suara');
+    }
+
+    public function test_voter_who_has_voted_can_poll_monitoring_data_api(): void
+    {
+        Vote::create([
+            'event_id' => $this->event->id,
+            'candidate_id' => $this->candidate1->id,
+        ]);
+
+        EventParticipation::create([
+            'event_id' => $this->event->id,
+            'voter_id' => $this->voter->id,
+            'voted_at' => Carbon::now(),
+        ]);
+
+        $response = $this->actingAs($this->voter, 'voter')
+            ->getJson(route('voter.events.monitoring.data', $this->event->room_code));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'success',
+            'total_votes' => 1,
+        ]);
+        $response->assertJsonStructure([
+            'status',
+            'event_status',
+            'total_voters',
+            'total_votes',
+            'participation_rate',
+            'candidates',
+            'is_tied',
+            'leading_candidates',
+            'recent_voters',
+            'server_time',
+        ]);
+    }
+
+    public function test_voter_who_has_not_voted_can_also_poll_monitoring_data_api(): void
+    {
+        $response = $this->actingAs($this->voter, 'voter')
+            ->getJson(route('voter.events.monitoring.data', $this->event->room_code));
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'status' => 'success',
+            'total_votes' => 0,
+        ]);
     }
 }

@@ -66,7 +66,6 @@ Route::middleware(['auth:web', 'role:PETUGAS'])->prefix('petugas')->name('petuga
     // 4.3 Live Monitoring & Rekapitulasi Suara
     Route::get('/events/{event}/monitor', [\App\Http\Controllers\Petugas\MonitoringController::class, 'show'])->name('events.monitor');
     Route::get('/events/{event}/monitor/data', [\App\Http\Controllers\Petugas\MonitoringController::class, 'data'])->name('events.monitor.data');
-    Route::get('/events/{event}/export', [\App\Http\Controllers\Petugas\MonitoringController::class, 'exportCsv'])->name('events.export');
 });
 
 // =========================================================================
@@ -82,6 +81,10 @@ Route::middleware(['auth:voter'])->prefix('voter')->name('voter.')->group(functi
     Route::get('/events/{room_code}/vote', [\App\Http\Controllers\Voter\VotingBoothController::class, 'show'])->name('events.vote');
     Route::post('/events/{room_code}/vote', [\App\Http\Controllers\Voter\VotingBoothController::class, 'castVote'])->name('events.vote.post');
     Route::get('/events/{room_code}/success', [\App\Http\Controllers\Voter\VotingBoothController::class, 'success'])->name('events.success');
+
+    // 5.3 Live Monitoring Perolehan Suara untuk Event yang Sudah Diikuti
+    Route::get('/events/{room_code}/monitoring', [\App\Http\Controllers\Voter\VoterMonitoringController::class, 'show'])->name('events.monitoring');
+    Route::get('/events/{room_code}/monitoring/data', [\App\Http\Controllers\Voter\VoterMonitoringController::class, 'data'])->name('events.monitoring.data');
 });
 
 

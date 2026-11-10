@@ -28,12 +28,18 @@
                 </span>
             </div>
 
-            <!-- Kode Ruangan & Status Bilik -->
+            <!-- Aksi Live Monitoring & Status Bilik -->
             <div class="flex items-center gap-2.5 flex-wrap">
-                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border-2 border-cyan-500 text-slate-900 font-mono text-xs font-bold shadow-2xs">
-                    <span class="text-slate-500 text-[10px] uppercase">KODE ROOM:</span>
-                    <span class="text-cyan-600 tracking-wider">{{ $event->room_code }}</span>
-                </div>
+                <a
+                    href="{{ route('voter.events.monitoring', $event->room_code) }}"
+                    class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cyan-50 hover:bg-cyan-100 text-cyan-800 border border-cyan-200 text-xs font-bold transition-all shadow-2xs cursor-pointer"
+                    title="Pantau Live Perolehan Suara Real-time"
+                >
+                    <svg class="w-4 h-4 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    <span>Live Perolehan Suara</span>
+                </a>
 
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white text-red-600 border-2 border-red-500">
                     <span>SIAP MENCOBLOS</span>
@@ -233,12 +239,34 @@
             id="voteForm"
             action="{{ route('voter.events.vote.post', $event->room_code) }}"
             method="POST"
-            class="space-y-2 pt-2"
+            class="space-y-4 pt-1"
         >
             @csrf
             <input type="hidden" name="candidate_id" id="modalCandidateId" value="">
 
-            <div class="grid grid-cols-2 gap-3">
+            <!-- Input Kode Ruangan (Room Code) -->
+            <div class="space-y-2 text-left">
+                <label for="modalRoomCode" class="block text-xs sm:text-sm font-bold text-slate-800">
+                    Masukkan Kode Ruangan (Room Code) <span class="text-rose-500">*</span>
+                </label>
+                <div class="relative">
+                    <input
+                        type="text"
+                        name="room_code"
+                        id="modalRoomCode"
+                        required
+                        placeholder="KODE RUANGAN"
+                        maxlength="20"
+                        autocomplete="off"
+                        class="w-full h-14 sm:h-15 py-3.5 px-4 bg-slate-50 border-2 border-slate-300 focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10 rounded-2xl text-center text-slate-900 placeholder:text-slate-300 placeholder:font-normal placeholder:tracking-widest text-base sm:text-lg font-mono font-bold tracking-[0.25em] uppercase transition-all shadow-inner"
+                    >
+                </div>
+                <p class="text-[11px] sm:text-xs text-slate-500 leading-tight">
+                    Minta kode ruangan resmi kepada panitia / pengawas bilik suara untuk mengesahkan surat suara Anda.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-1">
                 <button
                     type="button"
                     onclick="closeVoteModal()"
@@ -253,6 +281,7 @@
                     class="w-full py-3 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-bold rounded-xl text-xs shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                     <span>Ya, Coblos Sekarang!</span>
+                </button>
             </div>
         </form>
 
@@ -267,10 +296,19 @@
         document.getElementById('modalCandidateNumber').textContent = number;
         document.getElementById('modalCandidateName').textContent = name;
 
+        const roomInput = document.getElementById('modalRoomCode');
+        if (roomInput) {
+            roomInput.value = '';
+        }
+
         const modal = document.getElementById('voteModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
         document.body.classList.add('overflow-hidden');
+
+        setTimeout(() => {
+            roomInput?.focus();
+        }, 100);
     }
 
     function closeVoteModal() {
@@ -285,6 +323,11 @@
         if (e.target.id === 'voteModal') {
             closeVoteModal();
         }
+    });
+
+    // Otomatis ubah input kode ruangan menjadi huruf kapital
+    document.getElementById('modalRoomCode')?.addEventListener('input', (e) => {
+        e.target.value = e.target.value.toUpperCase();
     });
 
     // Cegah double submission

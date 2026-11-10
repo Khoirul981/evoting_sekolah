@@ -61,7 +61,7 @@
                         placeholder="nama@sekolah.sch.id"
                         required
                         autofocus
-                        class="w-full pl-10 pr-4 py-3 bg-[#100104] border @error('email') border-rose-500 @else border-rose-900/60 hover:border-rose-700 @enderror rounded-xl text-white placeholder:text-rose-400/30 text-sm focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-900/30 transition-all shadow-inner"
+                        class="w-full pl-10 pr-4 py-3 bg-[#100104] border @error('email') border-rose-500 @else border-rose-900/60 @enderror rounded-xl text-white placeholder:text-rose-400/30 text-sm focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-900/30 transition-all shadow-inner"
                     >
                 </div>
                 @error('email')
@@ -90,7 +90,7 @@
                         name="password"
                         placeholder="••••••••"
                         required
-                        class="w-full pl-10 pr-11 py-3 bg-[#100104] border @error('password') border-rose-500 @else border-rose-900/60 hover:border-rose-700 @enderror rounded-xl text-white placeholder:text-rose-400/30 text-sm focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-900/30 transition-all shadow-inner"
+                        class="w-full pl-10 pr-11 py-3 bg-[#100104] border @error('password') border-rose-500 @else border-rose-900/60 @enderror rounded-xl text-white placeholder:text-rose-400/30 text-sm focus:outline-none focus:border-rose-500 focus:ring-4 focus:ring-rose-900/30 transition-all shadow-inner"
                     >
                     <!-- Tombol Toggle Lihat / Sembunyikan Password -->
                     <button

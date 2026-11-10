@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\AuditLog;
 use App\Models\Candidate;
 use App\Models\Event;
 use App\Models\User;

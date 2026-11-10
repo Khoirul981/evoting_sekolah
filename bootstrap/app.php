@@ -16,6 +16,15 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => \App\Http\Middleware\RoleMiddleware::class,
         ]);
 
+        // Register custom CSRF token middleware
+        $middleware->validateCsrfTokens(except: [
+            'petugas/*',
+            'admin/*',
+            'voter/*',
+            'login',
+            'voter/login',
+        ]);
+
         $middleware->redirectGuestsTo(function (Request $request) {
             if ($request->is('admin/*') || $request->is('petugas/*') || $request->is('admin') || $request->is('petugas')) {
                 return route('admin.login');
